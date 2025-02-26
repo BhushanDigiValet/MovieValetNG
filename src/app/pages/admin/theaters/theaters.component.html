@@ -1,14 +1,14 @@
 <div class="Main">
   <div class="Head">
     <div class="user-icon-container">
-      <i class="pi pi-video"></i>
-      <span class="user-text">Movies</span>
+      <i class="pi pi-ticket"></i>
+      <span class="user-text">Theaters</span>
     </div>
     <div class="addUser">
       <div class="card flex justify-center">
         <p-button
           (click)="showDialog()"
-          label="Add Movie"
+          label="Add Theater"
           styleClass="custom-button"
         />
         <p-dialog
@@ -17,7 +17,7 @@
           [(visible)]="visible"
           [style]="{ width: '25rem' }"
         >
-          <span class="p-text-secondary block mb-8">Add Movie </span>
+          <span class="p-text-secondary block mb-8">Add Theater </span>
           <div class="flex items-center gap-4 mb-4">
             <label for="username" class="font-semibold w-24">Name</label>
             <input

@@ -1,0 +1,12 @@
+<div class="sidebar" [class.open]="isOpen">
+  <!-- Arrow button to toggle the sidebar -->
+  <button class="toggle-bars" (click)="toggleSidebar()">
+    <i class="pi" [ngClass]="isOpen ? 'pi-times' : 'pi-bars'"></i>
+  </button>
+  <ul>
+    <li><a (click)="changeComponent('Users')">Users</a></li>
+    <li><a (click)="changeComponent('Movies')">Movies</a></li>
+    <li><a (click)="changeComponent('Theaters')">Theaters</a></li>
+    <li><a (click)="changeComponent('Theater Admin')">Theater Admin</a></li>
+  </ul>
+</div>

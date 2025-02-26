@@ -1,25 +1,25 @@
-<div class="Main">
-  <div class="Head">
+<div class="userMain">
+  <div class="userHead">
     <div class="user-icon-container">
-      <i class="pi pi-video"></i>
-      <span class="user-text">Movies</span>
+      <i class="pi pi-user"></i>
+      <span class="user-text">User</span>
     </div>
     <div class="addUser">
       <div class="card flex justify-center">
         <p-button
           (click)="showDialog()"
-          label="Add Movie"
-          styleClass="custom-button"
+          label="Add User"
+         styleClass="custom-button"
         />
         <p-dialog
-          header="Add Theater Details"
+          header="Add User Profile"
           [modal]="true"
           [(visible)]="visible"
           [style]="{ width: '25rem' }"
         >
-          <span class="p-text-secondary block mb-8">Add Movie </span>
+          <span class="p-text-secondary block mb-8">Add User </span>
           <div class="flex items-center gap-4 mb-4">
-            <label for="username" class="font-semibold w-24">Name</label>
+            <label for="username" class="font-semibold w-24">Username</label>
             <input
               pInputText
               id="username"
@@ -37,17 +37,13 @@
               severity="secondary"
               (click)="visible = false"
             />
-            <p-button
-              styleClass="custom-button"
-              label="Add"
-              (click)="visible = false"
-            />
+            <p-button styleClass="custom-button" label="Add" (click)="visible = false" />
           </div>
         </p-dialog>
       </div>
     </div>
   </div>
-  <div class="Table">
+  <div class="userTable">
     <app-user-list></app-user-list>
   </div>
 </div>

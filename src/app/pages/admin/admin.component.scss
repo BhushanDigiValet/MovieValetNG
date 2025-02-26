@@ -1,15 +1,30 @@
-.surface-card {
+#admiMain {
+  display: flex;
   transition: all 0.3s ease-in-out;
+  margin-top: 30px;
+  width: 97%;
+  height: 80vh;
 }
 
-.surface-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 4px 10px rgba(4, 4, 4, 4);
+
+.content {
+  width: 70%;
+  flex-grow: 1;
+  margin-left: 60px; 
+
+  transition: margin-left 0.3s ease-in-out;
+
 }
-button {
-  transition: all 0.3s ease-in-out;
+
+
+.sidebar-open .content {
+  margin-left: 290px; 
 }
-button:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 4px 10px rgb(95, 93, 93);
+
+.adminDiv {
+  height: 100vh;
+  width: 100vw;
+  
+  display: flex;
+  flex-direction: column;
 }

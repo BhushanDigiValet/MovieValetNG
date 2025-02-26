@@ -1,8 +1,19 @@
 /* You can add global styles to this file, and also import other style files */
 
-@import "../node_modules/primeflex/primeflex.scss";
-@import "../node_modules/primeicons/primeicons.css";
+@import "primeflex/primeflex.css";
+@import "primeicons/primeicons.css";
 
 body {
   font-family: "Quicksand", sans-serif;
+  background: #e1efff !important;
+}
+.custom-button {
+  background-color: #2563eb !important;
+  color: white !important;
+  border-color: #2563eb !important;
+}
+
+.custom-button:hover {
+  background-color: #1d4ed8 !important;
+  border-color: #2563eb !important;
 }

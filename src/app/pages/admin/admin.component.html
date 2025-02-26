@@ -1,7 +1,14 @@
-<app-menu-bar></app-menu-bar>
-
-<div class="surface-ground px-4 py-5 md:px-6 lg:px-8 flex flex-column row-gap-3" id="adminCard">
-  <app-admin-options></app-admin-options>
-  <app-user-list></app-user-list>
+<div class="adminDiv">
+  <app-menu-bar></app-menu-bar>
+  <div id="admiMain" [class.sidebar-open]="isSidebarOpen">
+    <app-admin-sidebar
+      (sidebarToggle)="onSidebarToggle($event)"
+    ></app-admin-sidebar>
+    <div class="content">
+      <app-user *ngIf="selectedComponent === 'Users'" ></app-user>
+      <app-movie *ngIf="selectedComponent === 'Movies'"></app-movie>
+      <app-theaters *ngIf="selectedComponent === 'Theaters'"></app-theaters>
+      <app-theater-admin *ngIf="selectedComponent === 'Theater Admin'"></app-theater-admin>
+    </div>
+  </div>
 </div>
-

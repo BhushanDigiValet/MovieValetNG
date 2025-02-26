@@ -5,12 +5,12 @@ import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 
 @Component({
-  selector: 'app-movie',
+  selector: 'app-theater-admin',
   imports: [Dialog, ButtonModule, InputTextModule, UserListComponent],
-  templateUrl: './movie.component.html',
-  styleUrl: './movie.component.scss',
+  templateUrl: './theater-admin.component.html',
+  styleUrl: './theater-admin.component.scss',
 })
-export class MovieComponent {
+export class TheaterAdminComponent {
   visible: boolean = false;
 
   showDialog() {

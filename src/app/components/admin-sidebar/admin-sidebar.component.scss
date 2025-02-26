@@ -1,0 +1,89 @@
+.sidebar {
+  width: 260px;
+  height: 100vh;
+  background: white !important;
+  color: #2563eb;
+  position: fixed;
+  left: -240px;
+  transition: 0.4s ease-in-out;
+  padding-top: 20px;
+  box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1);
+
+  &.open {
+    left: 0;
+  }
+ 
+
+  .toggle-bars {
+    position: absolute;
+    top: 10px;
+    left: 100%;
+    transform: translateX(0);
+    background: #2563eb;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    padding: 10px;
+    border-radius: 0 5px 5px 0;
+    transition: background 0.3s ease-in-out;
+  }
+
+  /* Ensure the toggle button is visible when the sidebar is closed */
+  &:not(.open) .toggle-bars {
+    left: 100%; /* Always keep the button just outside the sidebar */
+    transform: translateX(0);
+  }
+
+  .toggle-bars:hover {
+    background: #1e3a8a;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+
+    li {
+      padding: 15px 20px;
+      border-bottom: 1px solid rgba(30, 58, 138, 0.2);
+      transition: background 0.3s ease-in-out;
+
+      &:hover {
+        background: rgba(30, 58, 138, 0.1);
+      }
+
+      a {
+        color: #1e3a8a;
+        text-decoration: none;
+        display: block;
+        font-weight: 500;
+        font-size: 16px;
+        transition: color 0.3s ease-in-out;
+
+        &:hover {
+          color: #2563eb;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    width: 220px;
+    left: -200px;
+
+    &.open {
+      left: 0;
+    }
+
+    .toggle-bars {
+      left: 100%;
+    }
+
+    &:not(.open) .toggle-bars {
+      left: 100%;
+    }
+  }
+}

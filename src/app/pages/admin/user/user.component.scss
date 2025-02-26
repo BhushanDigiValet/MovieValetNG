@@ -1,11 +1,11 @@
-.Main {
+.userMain {
   display: flex;
   flex-direction: column;
   height: 100%;
   padding: 20px;
 }
 
-.Head {
+.userHead {
   background: #ffffff;
 
   padding: 40px;
@@ -17,7 +17,7 @@
   flex-direction: column; 
 }
 
-.Table {
+.userTable {
   flex-grow: 1; /* Ensures it takes the remaining space */
   width: 100%; /* Ensures it stretches across */
 }
