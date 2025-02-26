@@ -1,0 +1,23 @@
+.menu {
+  display: flex;
+  justify-content: center;
+}
+.MenuMain {
+  width: 80vw;
+}
+p-megamenu {
+  width: 100%;
+}
+
+.p-megamenu {
+  border: none;
+  background: transparent;
+}
+
+.p-megamenu-root-list {
+  display: flex;
+  gap: 1rem;
+}
+
+
+

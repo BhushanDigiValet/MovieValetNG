@@ -1,0 +1,39 @@
+<div class="card" id="tableMain">
+  <p-table
+    [value]="customers"
+    [paginator]="true"
+    [rows]="5"
+    [tableStyle]="{ 'min-width': '50rem' }"
+    [rowsPerPageOptions]="[5, 10, 20]"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="width: 25%">Name</th>
+        <th style="width: 25%">City</th>
+        <th style="width: 25%">Email</th>
+        <th style="width: 25%">Operation</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-customer>
+      <tr>
+        <td>{{ customer.name }}</td>
+        <td>{{ customer.city }}</td>
+        <td>{{ customer.email }}</td>
+        <td class="btnRow">
+          <p-button
+            class="btn"
+            label="Make Admin"
+            severity="success"
+            [style]="{ padding: '4px 10px', fontSize: '14px' }"
+          />
+          <p-button
+            class="btn"
+            label="Delete"
+            severity="danger"
+            [style]="{ padding: '4px 10px', fontSize: '14px' }"
+          />
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

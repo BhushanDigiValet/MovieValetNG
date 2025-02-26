@@ -1,0 +1,15 @@
+.surface-card {
+  transition: all 0.3s ease-in-out;
+}
+
+.surface-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 10px rgba(4, 4, 4, 4);
+}
+button {
+  transition: all 0.3s ease-in-out;
+}
+button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 10px rgb(95, 93, 93);
+}
