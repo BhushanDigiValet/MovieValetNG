@@ -3,15 +3,20 @@
     <div class="text-center mb-5">
       <img src="" alt="Image" height="50" class="mb-3" />
       <div class="text-900 text-3xl font-medium mb-3">Welcome Back</div>
-      <span class="text-600 font-medium line-height-3"
-        >Don't have an account?</span
-      >
+      <span class="text-600 font-medium line-height-3">
+        Don't have an account?
+      </span>
       <a
         (click)="goToRegister()"
         class="font-medium no-underline ml-2 text-blue-500 cursor-pointer"
       >
         Create today!
       </a>
+    </div>
+
+    <!-- ✅ Display error message -->
+    <div *ngIf="errorMessage" class="text-red-500 text-center mb-3">
+      {{ errorMessage }}
     </div>
 
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
@@ -25,17 +30,13 @@
         class="w-full mb-3"
       />
       <div
-        *ngIf="
-          loginForm.get('email')?.invalid && loginForm.get('email')?.touched
-        "
+        *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched"
         class="text-red-500"
       >
         Valid email is required.
       </div>
 
-      <label for="password" class="block text-900 font-medium mb-2"
-        >Password</label
-      >
+      <label for="password" class="block text-900 font-medium mb-2">Password</label>
       <input
         id="password"
         type="password"
@@ -45,10 +46,7 @@
         class="w-full mb-3"
       />
       <div
-        *ngIf="
-          loginForm.get('password')?.invalid &&
-          loginForm.get('password')?.touched
-        "
+        *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
         class="text-red-500"
       >
         Password must be at least 6 characters long.
@@ -64,10 +62,9 @@
           ></p-checkbox>
           <label for="rememberMe" class="text-900">Remember me</label>
         </div>
-        <a
-          class="font-medium no-underline ml-2 text-blue-500 text-right cursor-pointer"
-          >Forgot password?</a
-        >
+        <a class="font-medium no-underline ml-2 text-blue-500 text-right cursor-pointer">
+          Forgot password?
+        </a>
       </div>
 
       <button

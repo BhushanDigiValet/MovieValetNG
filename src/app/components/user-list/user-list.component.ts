@@ -5,14 +5,20 @@ import { ButtonModule } from 'primeng/button';
 import { Dialog } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
+import { UserService } from '../../services/user/user.service.ts.service';
 
 interface Column {
   field: string;
   header: string;
 }
 
-interface Customer {
-  [key: string]: string; // Allows dynamic keys for flexible column data
+interface User {
+  id: string;
+  name: string;
+  role: string;
+  city: string;
+  email: string;
+  [key: string]: string; 
 }
 
 @Component({
@@ -33,31 +39,45 @@ export class UserListComponent {
   // Columns (Dynamically Defined)
   columns: Column[] = [
     { field: 'name', header: 'Name' },
+    { field: 'role', header: 'Role' },
     { field: 'city', header: 'City' },
     { field: 'email', header: 'Email' },
   ];
 
-  // Customer Data
-  customers: Customer[] = [
-    { name: 'John Doe', city: 'New York', email: 'john@example.com' },
-    { name: 'Jane Smith', city: 'Los Angeles', email: 'jane@example.com' },
-    { name: 'Alice Brown', city: 'Chicago', email: 'alice@example.com' },
-  ];
+  // Users Data (Directly from API)
+  users: User[] = [];
 
   visible: boolean = false;
-  selectedCustomer: Customer = {};
+  selectedUser: User = {} as User;
   selectedIndex: number = -1;
 
-  showDialog(customer: Customer, index: number) {
-    this.selectedCustomer = { ...customer }; // Copy selected customer data
+  constructor(private userService: UserService) {}
+
+  showDialog(user: User, index: number) {
+    this.selectedUser = { ...user }; // Copy selected user data
     this.selectedIndex = index;
     this.visible = true;
   }
 
   saveChanges() {
     if (this.selectedIndex !== -1) {
-      this.customers[this.selectedIndex] = { ...this.selectedCustomer };
+      this.users[this.selectedIndex] = { ...this.selectedUser };
     }
     this.visible = false;
   }
+
+  ngOnInit() {
+    this.userService.getUsers().subscribe(({ data }) => {
+      if (data && data.users) {
+        this.users = data.users.map((user: any) => ({
+          id: user.id,
+          name: user.username,
+          role: user.role,
+          city: user.cityId ? user.cityId.name : 'Unknown',
+          email: user.email,
+        }));
+      }
+    });
+  }
+  
 }

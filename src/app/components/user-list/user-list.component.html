@@ -1,6 +1,6 @@
 <div class="card" id="tableMain">
   <p-table
-    [value]="customers"
+    [value]="users"
     [paginator]="true"
     [rows]="5"
     [tableStyle]="{ 'min-width': '50rem' }"
@@ -15,21 +15,34 @@
     </ng-template>
 
     <!-- Dynamic Body -->
-    <ng-template pTemplate="body" let-customer let-index="rowIndex">
+    <ng-template pTemplate="body" let-user let-index="rowIndex">
       <tr>
         <td *ngFor="let col of columns">
-          {{ customer[col.field] }}
+          {{ user[col.field] }}
         </td>
-        <td>
+        <td class="flex gap-2">
+          <!-- Edit Button -->
           <p-button
-            (click)="showDialog(customer, index)"
+            icon="pi pi-pencil"
+            (click)="showDialog(user, index)"
             label="Edit"
             styleClass="custom-button"
             [style]="{
-              padding: '4px 10px',
+              padding: '6px 20px',
               fontSize: '14px',
               background: '#2563EB',
               borderColor: '#2563EB'
+            }"
+          />
+          <!-- Delete Button -->
+          <p-button
+            icon="pi pi-ban"
+            label="Block"
+            severity="danger"
+            [style]="{
+              padding: '6px 20px',
+              fontSize: '14px',
+              marginLeft: '10px'
             }"
           />
         </td>
@@ -55,7 +68,7 @@
       [id]="col.field"
       class="flex-auto"
       autocomplete="off"
-      [(ngModel)]="selectedCustomer[col.field]"
+      [(ngModel)]="selectedUser[col.field]"
     />
   </div>
 

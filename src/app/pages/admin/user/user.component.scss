@@ -6,13 +6,16 @@
 }
 
 .userHead {
+
+  width: 100%;
   background: #ffffff;
   padding: 40px;
   border-radius: 15px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: end;
+  
+ 
   flex-direction: column; 
 }
 
@@ -24,7 +27,7 @@
 .user-icon-container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
   background: #2563eb;
   border-radius: 50%;
