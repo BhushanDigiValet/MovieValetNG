@@ -8,6 +8,7 @@ import { User } from '../../pages/admin/user/user.component';
 })
 export class UserService {
   constructor(private apollo: Apollo) {}
+
   getUsers(): Observable<any> {
     return this.apollo.watchQuery({
       query: gql`
@@ -25,6 +26,7 @@ export class UserService {
       `,
     }).valueChanges;
   }
+
   login(email: string, password: string): Observable<any> {
     return this.apollo.mutate({
       mutation: gql`
@@ -45,6 +47,7 @@ export class UserService {
       },
     });
   }
+
   register(user: User): Observable<any> {
     return this.apollo.mutate({
       mutation: gql`
@@ -66,7 +69,30 @@ export class UserService {
           email: user.email,
           password: user.password,
           role: user.role,
-          cityName: user.city, 
+          cityName: user.city,
+        },
+      },
+    });
+  }
+
+  updateUser(userId: string, userData: Partial<User>): Observable<any> {
+    return this.apollo.mutate({
+      mutation: gql`
+        mutation UpdateUser($updateUserId: ID!, $input: UpdateUserInput!) {
+          updateUser(id: $updateUserId, input: $input) {
+            id
+            username
+            role
+            email
+          }
+        }
+      `,
+      variables: {
+        updateUserId: userId,
+        input: {
+          username: userData.username,
+          email: userData.email,
+          role: userData.role,
         },
       },
     });

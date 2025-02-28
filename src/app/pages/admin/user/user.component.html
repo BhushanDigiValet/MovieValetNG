@@ -1,61 +1,24 @@
 <div class="userMain">
-  <div class="userHead">
-    <div class="user-icon-container">
-      <i class="pi pi-user"></i>
-      <span class="user-text">User</span>
-    </div>
-    <div class="addUser">
-      <div class="card flex justify-center">
-        <p-button (click)="showDialog()" label="Add User" styleClass="custom-button" />
-        <p-dialog
-          header="Add User Profile"
-          [modal]="true"
-          [(visible)]="visible"
-          [style]="{ width: '30rem' }"
-        >
-          <span class="p-text-secondary block mb-8 flex justify-content-center flex-wrap">Add User</span>
-          <form [formGroup]="userForm">
-            <div class="flex items-center gap-4 mb-4">
-              <label style="width: 5rem;" for="username" class="font-semibold w-24">Username</label>
-              <input pInputText id="username" formControlName="username" class="flex-auto" />
-            </div>
-
-            <div class="flex items-center gap-4 mb-4">
-              <label style="width: 5rem;" for="email" class="font-semibold w-24">Email</label>
-              <input pInputText id="email" formControlName="email" class="flex-auto" />
-            </div>
-
-            <div class="flex items-center gap-4 mb-4">
-              <label style="width: 5rem;" for="password" class="font-semibold w-24">Password</label>
-              <input type="password" pInputText id="password" formControlName="password" class="flex-auto" />
-            </div>
-
-            <div class="flex items-center gap-4 mb-4">
-              <label for="role " style="width: 5rem;" class="font-semibold w-24">Role</label>
-              <p-dropdown
-                id="role"
-                formControlName="role"
-                [options]="roles"
-                placeholder="Select Role"
-                class="flex-auto"
-              ></p-dropdown>
-            </div>
-
-            <div class="flex items-center gap-4 mb-8">
-              <label style="width: 5rem;" for="city" class="font-semibold w-24">City</label>
-              <input pInputText id="city" formControlName="city" class="flex-auto" />
-            </div>
-
-            <div class="flex justify-end gap-2">
-              <p-button label="Cancel" severity="secondary" (click)="visible = false" />
-              <p-button styleClass="custom-button" label="Add" (click)="addUser()" />
-            </div>
-          </form>
-        </p-dialog>
-      </div>
-    </div>
+  <div>
+    <app-add-dialog
+      [piIcon]="'pi pi-user'"
+      [dialogTitle]="'User'"
+      [title]="'Edit Profile'"
+      [description]="'Update your details.'"
+      [fields]="formFields"
+      (formSubmit)="handleFormSubmit($event)"
+      [btnName]="'Add User'"
+    ></app-add-dialog>
   </div>
+
   <div class="userTable">
-    <app-user-list></app-user-list>
+    <app-data-table
+      [data]="users"
+      [columns]="userColumns"
+      [showEdit]="true"
+      [showBlock]="true"
+      (save)="updateUser($event)"
+      (delete)="deleteUser($event)"
+    ></app-data-table>
   </div>
 </div>

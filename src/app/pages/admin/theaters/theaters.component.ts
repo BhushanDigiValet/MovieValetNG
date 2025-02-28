@@ -3,17 +3,33 @@ import { UserListComponent } from '../../../components/user-list/user-list.compo
 import { Dialog } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
+import { AddDialogComponent } from "../../../components/add-dialog/add-dialog.component";
 
 @Component({
   selector: 'app-theaters',
-  imports: [Dialog, ButtonModule, InputTextModule, UserListComponent],
+  imports: [
+   
+    ButtonModule,
+    InputTextModule,
+    UserListComponent,
+    AddDialogComponent,
+  ],
   templateUrl: './theaters.component.html',
   styleUrl: './theaters.component.scss',
 })
 export class TheatersComponent {
-  visible: boolean = false;
+  fields = [
+    { label: 'Movie Name', value: '', placeholder: 'Enter movie name' },
+    { label: 'Ticket Price', value: '', placeholder: 'Enter ticket price' },
+    { label: 'Show Time', value: '', placeholder: 'Enter show time' },
+  ];
 
-  showDialog() {
-    this.visible = true;
+  onDialogCancel() {
+    console.log('Dialog canceled');
+  }
+
+  onDialogSubmit(formData: any) {
+    console.log('Form submitted:', formData);
+    // Handle form submission (e.g., send data to an API)
   }
 }

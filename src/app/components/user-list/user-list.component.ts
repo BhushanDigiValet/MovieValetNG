@@ -50,7 +50,8 @@ export class UserListComponent {
   visible: boolean = false;
   selectedUser: User = {} as User;
   selectedIndex: number = -1;
-
+ 
+  
   constructor(private userService: UserService) {}
 
   showDialog(user: User, index: number) {
@@ -79,5 +80,13 @@ export class UserListComponent {
       }
     });
   }
-  
+  toggleBlockStatus(user: any): void {
+    user.blocked = !user.blocked;
+  }
+  updateUser(updatedUser: any) {
+    const index = this.users.findIndex((user) => user.id === updatedUser.id);
+    if (index !== -1) {
+      this.users[index] = updatedUser;
+    }
+  }
 }

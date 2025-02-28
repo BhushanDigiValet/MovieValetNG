@@ -1,0 +1,68 @@
+<div class="Head">
+  <div class="user-icon-container">
+    <i [class]="piIcon"></i>
+    <span class="user-text">{{ dialogTitle }}</span>
+  </div>
+  <div class="addUser">
+    <div class="card flex justify-center">
+      <p-button
+        (click)="showDialog()"
+        [label]="btnName"
+        styleClass="custom-button"
+      />
+      <p-dialog
+        header="{{ title }}"
+        [modal]="true"
+        [(visible)]="visible"
+        [style]="{ width: '25rem' }"
+      >
+        <span class="p-text-secondary block mb-8">{{ description }}</span>
+        <form [formGroup]="form">
+          <div
+            *ngFor="let field of fields"
+            class="flex items-center gap-4 mb-4"
+          >
+            <label
+              style="width: 5rem"
+              [for]="field.name"
+              class="font-semibold w-24"
+              >{{ field.label }}</label
+            >
+
+            <ng-container [ngSwitch]="field.type">
+              <!-- Text Input -->
+              <input
+                *ngSwitchCase="'text'"
+                pInputText
+                [id]="field.name"
+                class="flex-auto"
+                autocomplete="off"
+                [placeholder]="field.placeholder"
+                [formControlName]="field.name"
+              />
+
+              <!-- Dropdown -->
+              <p-dropdown
+                *ngSwitchCase="'dropdown'"
+                [options]="field.options"
+                optionLabel="label"
+                optionValue="value"
+                [placeholder]="field.placeholder"
+                [formControlName]="field.name"
+              >
+              </p-dropdown>
+            </ng-container>
+          </div>
+        </form>
+        <div class="flex justify-end gap-2">
+          <p-button
+            label="Cancel"
+            severity="secondary"
+            (click)="closeDialog()"
+          />
+          <p-button styleClass="custom-button" label="Save" (click)="save()" />
+        </div>
+      </p-dialog>
+    </div>
+  </div>
+</div>
