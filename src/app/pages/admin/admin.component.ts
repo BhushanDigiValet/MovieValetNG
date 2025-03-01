@@ -6,14 +6,12 @@ import { ButtonModule } from 'primeng/button';
 import { RippleModule } from 'primeng/ripple';
 import { AdminSidebarComponent } from '../../components/admin-sidebar/admin-sidebar.component';
 import { MessageService } from 'primeng/api';
-import { UserComponent } from './user/user.component';
+
 import { AdminService } from '../../services/admin.service';
-import { MovieComponent } from './movie/movie.component';
-import { TheaterAdminComponent } from './theater-admin/theater-admin.component';
-import { TheatersComponent } from './theaters/theaters.component';
+
 import { UserService } from '../../services/user/user.service.ts.service';
-
-
+import { RouterModule } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 @Component({
   selector: 'app-admin',
   standalone: true,
@@ -24,10 +22,7 @@ import { UserService } from '../../services/user/user.service.ts.service';
     ButtonModule,
     RippleModule,
     AdminSidebarComponent,
-    UserComponent,
-    MovieComponent,
-    TheaterAdminComponent,
-    TheatersComponent,
+    RouterModule, // Router module included for routing
   ],
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.scss'],
@@ -35,20 +30,23 @@ import { UserService } from '../../services/user/user.service.ts.service';
 })
 export class AdminComponent implements OnInit {
   isSidebarOpen = false;
-  selectedComponent: string = 'Users';
 
-  constructor(private adminService: AdminService, private userService: UserService) {
-    this.adminService.selectedComponent$.subscribe((component) => {
-      this.selectedComponent = component;
-    });
-  }
+  constructor(
+    private adminService: AdminService,
+    private userService: UserService,
+    private router: Router
+  ) {}
+
   onSidebarToggle(isOpen: boolean) {
     this.isSidebarOpen = isOpen;
   }
-  ngOnInit(){
-    this.userService.getUsers().subscribe(({data})=>{
-    
-      
-    })
-  };
+
+  ngOnInit() {
+    this.userService.getUsers().subscribe(({ data }) => {});
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        console.log('Navigated to:', event.url);
+      }
+    });
+  }
 }

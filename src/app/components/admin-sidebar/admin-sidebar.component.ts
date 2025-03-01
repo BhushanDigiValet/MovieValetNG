@@ -1,6 +1,7 @@
 import { Component, Output, EventEmitter} from '@angular/core';
 import { NgClass } from '@angular/common';
 import { AdminService } from '../../services/admin.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin-sidebar',
@@ -18,9 +19,12 @@ export class AdminSidebarComponent {
     this.isOpen = !this.isOpen;
     this.sidebarToggle.emit(this.isOpen);
   }
-  constructor(private admin: AdminService) {}
+  constructor(private admin: AdminService, private router: Router) {}
 
   changeComponent(component: string) {
     this.admin.setSelectedComponent(component);
+  }
+  logNavigation(page: string) {
+    this.router.navigate([page]);
   }
 }

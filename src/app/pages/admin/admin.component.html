@@ -5,10 +5,7 @@
       (sidebarToggle)="onSidebarToggle($event)"
     ></app-admin-sidebar>
     <div class="content">
-      <app-user *ngIf="selectedComponent === 'Users'" ></app-user>
-      <app-movie *ngIf="selectedComponent === 'Movies'"></app-movie>
-      <app-theaters *ngIf="selectedComponent === 'Theaters'"></app-theaters>
-      <app-theater-admin *ngIf="selectedComponent === 'Theater Admin'"></app-theater-admin>
+      <router-outlet></router-outlet>
     </div>
   </div>
 </div>
