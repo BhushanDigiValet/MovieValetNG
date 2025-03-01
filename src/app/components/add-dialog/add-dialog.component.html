@@ -9,6 +9,7 @@
         (click)="showDialog()"
         [label]="btnName"
         styleClass="custom-button"
+        icon="pi pi-plus"
       />
       <p-dialog
         header="{{ title }}"
@@ -26,8 +27,9 @@
               style="width: 5rem"
               [for]="field.name"
               class="font-semibold w-24"
-              >{{ field.label }}</label
             >
+              {{ field.label }}
+            </label>
 
             <ng-container [ngSwitch]="field.type">
               <!-- Text Input -->
@@ -41,6 +43,27 @@
                 [formControlName]="field.name"
               />
 
+              <!-- Number Input -->
+              <input
+                *ngSwitchCase="'number'"
+                type="number"
+                pInputText
+                [id]="field.name"
+                class="flex-auto"
+                [placeholder]="field.placeholder"
+                [formControlName]="field.name"
+              />
+
+              <!-- Textarea -->
+              <textarea
+                *ngSwitchCase="'textarea'"
+                pInputTextarea
+                [id]="field.name"
+                class="flex-auto"
+                [placeholder]="field.placeholder"
+                [formControlName]="field.name"
+              ></textarea>
+
               <!-- Dropdown -->
               <p-dropdown
                 *ngSwitchCase="'dropdown'"
@@ -49,8 +72,67 @@
                 optionValue="value"
                 [placeholder]="field.placeholder"
                 [formControlName]="field.name"
+              ></p-dropdown>
+
+              <!-- Multi-Select -->
+              <p-multiSelect
+                *ngSwitchCase="'multi-select'"
+                [options]="field.options"
+                optionLabel="label"
+                optionValue="value"
+                [placeholder]="field.placeholder"
+                [formControlName]="field.name"
+              ></p-multiSelect>
+
+              <!-- Date Picker -->
+              <p-calendar
+                *ngSwitchCase="'date'"
+                [showIcon]="true"
+                [formControlName]="field.name"
+                [placeholder]="field.placeholder"
+              ></p-calendar>
+              <!-- Dynamic Array Inputs (Star Cast) -->
+              <div
+                *ngSwitchCase="'array'"
+                [formArrayName]="field.name"
+                class="starCast"
               >
-              </p-dropdown>
+                <div
+                  *ngFor="
+                    let item of getFormArray(field.name).controls;
+                    let i = index
+                  "
+                  [formGroupName]="i"
+                  class="array-item"
+                >
+                  <input
+                    type="text"
+                    pInputText
+                    formControlName="name"
+                    placeholder="Enter actor name"
+                  />
+                  <input
+                    type="text"
+                    pInputText
+                    formControlName="image"
+                    placeholder="Enter actor image URL"
+                  />
+                  <button
+                    type="button"
+                    class="remove-button"
+                    (click)="removeArrayItem(field.name, i)"
+                  >
+                    ❌ Remove
+                  </button>
+                </div>
+                <button
+                  type="button"
+                  class="add-button"
+                  (click)="addArrayItem(field.name)"
+                >
+                  ➕ Add More
+                </button>
+              </div>
             </ng-container>
           </div>
         </form>

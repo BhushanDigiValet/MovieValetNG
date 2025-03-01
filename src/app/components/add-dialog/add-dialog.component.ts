@@ -1,10 +1,19 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  OnInit,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
 import {
   FormBuilder,
   FormControl,
   FormGroup,
-  ReactiveFormsModule,
   Validators,
+  ReactiveFormsModule,
+  FormArray,
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { DialogModule } from 'primeng/dialog';
@@ -12,23 +21,29 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { FormsModule } from '@angular/forms';
 import { DropdownModule } from 'primeng/dropdown';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { InputTextarea } from 'primeng/inputtextarea';
+import { CalendarModule } from 'primeng/calendar';
 @Component({
   selector: 'app-add-dialog',
   standalone: true,
   imports: [
-    DropdownModule,
     CommonModule,
     ReactiveFormsModule,
+    FormsModule,
     DialogModule,
     InputTextModule,
     ButtonModule,
-    FormsModule,
+    DropdownModule,
+    MultiSelectModule,
+    InputTextarea,
+    CalendarModule,
   ],
   templateUrl: './add-dialog.component.html',
   styleUrls: ['./add-dialog.component.scss'],
 })
-export class AddDialogComponent {
-  @Input() piIcon: string = 'pi pi user';
+export class AddDialogComponent implements OnInit, OnChanges {
+  @Input() piIcon: string = 'pi pi-user';
   @Input() dialogTitle: string = 'Add Dialog';
   @Input() title: string = 'Edit Profile';
   @Input() btnName: string = 'Show';
@@ -39,7 +54,9 @@ export class AddDialogComponent {
     type: string;
     placeholder?: string;
     options?: { label: string; value: string }[];
+    required?: boolean; // ✅ Added required field for validation
   }[] = [];
+
   @Output() formSubmit = new EventEmitter<any>();
 
   visible: boolean = false;
@@ -51,23 +68,14 @@ export class AddDialogComponent {
     this.createForm();
   }
 
-  createForm() {
-    const controls: { [key: string]: FormControl } = {};
-    this.fields.forEach((field) => {
-      controls[field.name] = new FormControl(
-        '',
-        field.type === 'dropdown' ? Validators.required : []
-      );
-    });
-    this.form = new FormGroup(controls);
-  }
-
-  ngOnChanges(): void {
-    this.createForm();
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['fields'] && !changes['fields'].firstChange) {
+      this.createForm();
+    }
   }
 
   showDialog() {
-    this.createForm();
+    this.createForm(); // Ensures the form is always fresh
     this.visible = true;
   }
 
@@ -80,5 +88,44 @@ export class AddDialogComponent {
       this.formSubmit.emit(this.form.value);
       this.visible = false;
     }
+  }
+  createForm() {
+    const controls: { [key: string]: any } = {};
+
+    this.fields.forEach((field) => {
+      if (field.type === 'array') {
+        // ✅ Properly initializing as an array of FormGroups
+        controls[field.name] = new FormArray([]);
+      } else {
+        controls[field.name] = new FormControl(
+          '',
+          field.required ? Validators.required : []
+        );
+      }
+    });
+
+    this.form = this.fb.group(controls);
+  }
+
+  addArrayItem(fieldName: string) {
+    const arrayControl = this.form.get(fieldName) as FormArray;
+
+    // ✅ Instead of empty strings, add a new FormGroup with 'name' & 'image' fields
+    arrayControl.push(
+      this.fb.group({
+        name: ['', Validators.required],
+        image: ['', Validators.required],
+      })
+    );
+
+    console.log('Updated Star Cast:', arrayControl.value); // Debugging
+  }
+
+  removeArrayItem(fieldName: string, index: number) {
+    const arrayControl = this.form.get(fieldName) as FormArray;
+    arrayControl.removeAt(index); // ✅ Allow removal even when one item is left
+  }
+  getFormArray(fieldName: string): FormArray {
+    return this.form.get(fieldName) as FormArray;
   }
 }

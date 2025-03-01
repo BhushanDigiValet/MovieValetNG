@@ -45,12 +45,6 @@ export class UserComponent implements OnInit {
       placeholder: 'Enter email',
     },
     {
-      name: 'password',
-      label: 'Password',
-      type: 'text',
-      placeholder: 'Enter password',
-    },
-    {
       name: 'role',
       label: 'Role',
       type: 'dropdown',
@@ -60,6 +54,12 @@ export class UserComponent implements OnInit {
         { label: 'Admin', value: 'ADMIN' },
         { label: 'Theater Admin', value: 'THEATER_ADMIN' },
       ],
+    },
+    {
+      name: 'password',
+      label: 'Password',
+      type: 'text',
+      placeholder: 'Enter password',
     },
   ];
 
@@ -106,6 +106,12 @@ export class UserComponent implements OnInit {
 
   deleteUser(deleteUser: User) {
     console.log('Hello from delet');
-    console.log(deleteUser.id);
+
+    this.userService.deleteUser(deleteUser.id!).subscribe({
+      next: () => {
+        console.log(deleteUser.id);
+        this.users = this.users.filter((user) => user.id !== deleteUser.id);
+      },
+    });
   }
 }

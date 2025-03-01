@@ -2,10 +2,21 @@
   <div class="Head">
     <app-add-dialog
      [piIcon]="'pi pi-ticket'"
+     [dialogTitle]="'Theater'"
+     [title]="'Add Theater Details'"
+     [fields]="formFields"
+     (formSubmit)="handleFormSubmit($event)"
+     [btnName]="'Add Theater'"
     ></app-add-dialog>
 
   </div>
   <div class="Table">
-    <app-user-list></app-user-list>
+    <app-data-table
+      [data]="theater"
+      [columns]="theaterColumns"
+      [showEdit]="true"
+      [showBlock]="true"
+      [columns]="theaterColumns"
+    ></app-data-table>
   </div>
 </div>

@@ -1,76 +1,226 @@
-.Head {
-  background: #ffffff;
-  padding: 40px;
-  border-radius: 15px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column; 
-}
+// 🎨 Colors
+$primary-color: #007bff;
+$secondary-color: #6c757d;
+$background-color: #f8f9fa;
+$border-color: #ddd;
+$text-color: #333;
+$button-bg: $primary-color;
+$button-hover-bg: darken($button-bg, 10%);
 
-.Table {
-  flex-grow: 1;
-  width: 100%; 
-}
+// 🌟 Mixins for Buttons
+@mixin button-style($bg-color) {
+  background: $bg-color;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
 
-.user-icon-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background: #2563eb;
-  border-radius: 50%;
-  width: 120px;
-  height: 120px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-  transition: transform 0.3s ease-in-out;
-}
-
-.user-icon-container:hover {
-  transform: scale(1.05);
-}
-
-.user-icon-container i {
-  font-size: 3rem;
-  color: #ffffff;
-}
-
-.user-text {
-  margin-top: 10px;
-  font-size: 1.2rem;
-  font-weight: bold;
-  color: #fff;
-}
-
-:host ::ng-deep .p-dialog {
-  overflow: visible !important;
-
-  .p-dialog-content {
-    overflow: visible !important;
+  &:hover {
+    background: darken($bg-color, 10%);
   }
 }
 
-:host ::ng-deep .p-dropdown-panel {
-  z-index: 1050 !important; 
-  position: absolute !important;
+// 🏠 Dialog Styling
+:host ::ng-deep .p-dialog {
+  width: 40rem !important; // ✅ Increased form width
+  max-width: 90vw; // Responsive max-width
+
+  .p-dialog-header {
+    background: $primary-color;
+    color: white;
+    font-size: 1.5rem;
+    font-weight: bold;
+    padding: 15px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+  }
+
+  .p-dialog-content {
+    padding: 25px;
+    background: white;
+    border-radius: 10px;
+
+    .p-text-secondary {
+      font-size: 1rem;
+      color: $secondary-color;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      width: 100%; // ✅ Make form take full width
+
+      .form-field {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 15px;
+        width: 100%;
+
+        label {
+          font-weight: 600;
+          width: 150px; // ✅ Increased label width
+          text-align: right;
+          flex-shrink: 0;
+        }
+
+        input,
+        textarea,
+        p-dropdown,
+        p-multiSelect,
+        p-calendar {
+          flex: 1;
+          padding: 10px;
+          border: 1px solid $border-color;
+          border-radius: 5px;
+          font-size: 1rem;
+          width: 100%; // ✅ Make inputs take full width
+          transition: border 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+
+          &:focus {
+            border-color: $primary-color;
+            box-shadow: 0 0 5px rgba($primary-color, 0.5);
+            outline: none;
+          }
+        }
+
+        textarea {
+          resize: vertical;
+          min-height: 100px;
+        }
+      }
+
+      // 🛠️ Dynamic Array Styling (Star Cast)
+      .dynamic-array {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        width: 100%;
+
+        .array-item {
+          display: flex;
+          flex-direction: column; // ✅ Ensures vertical alignment
+          gap: 10px;
+          width: 100%;
+
+          input {
+            width: 100%;
+          }
+
+          .array-actions {
+            display: flex;
+            justify-content: flex-start;
+            gap: 10px;
+          }
+
+          button {
+            @include button-style($secondary-color);
+            padding: 6px 10px;
+          }
+        }
+
+        .add-button {
+          @include button-style($primary-color);
+          align-self: start;
+        }
+      }
+    }
+  }
+
+  .p-dialog-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding: 20px;
+
+    .p-button {
+      min-width: 120px; // ✅ Increased button size
+      font-weight: 600;
+      padding: 10px 14px;
+    }
+
+    .p-button-secondary {
+      @include button-style($secondary-color);
+    }
+  }
 }
 
-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
+// 📱 Responsive Adjustments
+@media (max-width: 768px) {
+  :host ::ng-deep .p-dialog {
+    width: 90vw !important; // Make the dialog more responsive
+  }
 
-.p-dialog {
+  .form-field {
+    flex-direction: column;
+    align-items: flex-start;
+
+    label {
+      text-align: left;
+      width: 100%;
+    }
+  }
+}
+// 🎨 Colors
+$primary-color: #007bff;
+$secondary-color: #6c757d;
+$text-color: #333;
+$border-color: #ddd;
+
+// 🌟 User Icon & Title Styling
+.Head {
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
+  background: white;
+  padding: 15px 20px;
+  border-bottom: 2px solid $border-color;
+
+  .user-icon-container {
+    display: flex;
+    align-items: center;
+    gap: 10px; // ✅ Creates space between icon & text
+
+    i {
+      font-size: 1.8rem; // ✅ Larger icon size
+      color: $primary-color;
+    }
+
+    .user-text {
+      font-size: 1.4rem; // ✅ Improve text size
+      font-weight: bold;
+      color: $text-color;
+    }
+  }
 }
 
-.p-dialog-footer {
-  width: 100%;
+// 🛠️ Button Styling
+.addUser {
   display: flex;
-  justify-content: flex-end;
-  gap: 1rem;
+  align-items: center;
+  
+  .card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .custom-button {
+    background: $primary-color !important;
+    color: white !important;
+    font-weight: 600;
+    padding: 10px 16px;
+    border-radius: 6px;
+    transition: 0.3s ease-in-out;
+
+    &:hover {
+      background: darken($primary-color, 10%) !important;
+    }
+  }
+}
+:host ::ng-deep .p-overlaypanel {
+  z-index: 9999 !important;
 }

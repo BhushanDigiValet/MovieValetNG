@@ -40,7 +40,15 @@ export class DataTableComponent {
     this.save.emit(this.selectedItem);
     this.visible = false;
   }
-  deleteUser() {
-    this.delete.emit(this.selectedItem);
+  deleteUser(item: any) {
+    if (item) {
+      this.selectedItem = item; // Assign item if passed
+    }
+    console.log('Selected item:', this.selectedItem); // Debugging line
+    if (this.selectedItem?.id) {
+      this.delete.emit(this.selectedItem);
+    } else {
+      console.error('Error: No valid ID found in selected item');
+    }
   }
 }

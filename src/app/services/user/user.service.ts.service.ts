@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Apollo, gql } from 'apollo-angular';
-import { Observable } from 'rxjs';
+import { catchError, Observable, tap, throwError } from 'rxjs';
 import { User } from '../../pages/admin/user/user.component';
 
 @Injectable({
@@ -96,5 +96,25 @@ export class UserService {
         },
       },
     });
+  }
+  deleteUser(userId: string): Observable<any> {
+    return this.apollo.mutate({
+      mutation: gql`
+        mutation DeleteUser($deleteUserId: ID!) {
+          deleteUser(id: $deleteUserId) {
+            id
+            username
+          }
+        }
+      `,
+      variables: {
+        deleteUserId: userId,
+      },
+    }).pipe(
+    tap(response => console.log('DeleteUser Response:', response)),
+    catchError(error => {
+      console.error('Apollo delete mutation error:', error);
+      return throwError(error);
+    }))
   }
 }
