@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MovieService } from '../../../services/admin/movie.service';
 import { MessageService } from 'primeng/api'; // For notifications
 import { AddDialogComponent } from '../../../components/add-dialog/add-dialog.component';
-import { UserListComponent } from '../../../components/user-list/user-list.component';
+
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { DataTableComponent } from '../../../components/data-table/data-table.component';

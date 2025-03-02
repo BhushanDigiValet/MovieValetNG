@@ -6,10 +6,14 @@ import { UserComponent } from './pages/admin/user/user.component';
 import { MovieComponent } from './pages/admin/movie/movie.component';
 import { TheatersComponent } from './pages/admin/theaters/theaters.component';
 import { TheaterAdminComponent } from './pages/admin/theater-admin/theater-admin.component';
+import { HomeComponent } from './components/home/home.component';
+import { UserHomeComponent } from './pages/user/user-home/user-home.component';
 
 export const routes: Routes = [
-  { path: '', component: RegisterComponent },
+  { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
+  { path: '', component: HomeComponent },
+  { path: 'home', component: UserHomeComponent },
   {
     path: 'admin',
     component: AdminComponent,
@@ -18,7 +22,7 @@ export const routes: Routes = [
       { path: 'movies', component: MovieComponent },
       { path: 'theaters', component: TheatersComponent },
       { path: 'theater-admin', component: TheaterAdminComponent },
-      { path: '', redirectTo: 'users', pathMatch: 'full' }, // Default child route
+      { path: '', redirectTo: 'users', pathMatch: 'full' },
     ],
   },
 ];

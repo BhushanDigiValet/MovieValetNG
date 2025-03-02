@@ -1,19 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import { UserListComponent } from '../../../components/user-list/user-list.component';
-import { Dialog } from 'primeng/dialog';
+
+
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { AddDialogComponent } from '../../../components/add-dialog/add-dialog.component';
 import { TheaterService } from '../../../services/admin/theater.service';
 import { DataTableComponent } from '../../../components/data-table/data-table.component';
-import { log } from 'console';
+
 
 @Component({
   selector: 'app-theaters',
   imports: [
     ButtonModule,
     InputTextModule,
-    UserListComponent,
+    
     AddDialogComponent,
     DataTableComponent,
   ],
