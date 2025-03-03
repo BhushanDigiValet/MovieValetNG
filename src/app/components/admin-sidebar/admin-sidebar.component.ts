@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
   styleUrl: './admin-sidebar.component.scss',
 })
 export class AdminSidebarComponent {
-  isOpen: boolean = false;
+  isOpen: boolean = true;
 
   @Output() sidebarToggle = new EventEmitter<boolean>();
 

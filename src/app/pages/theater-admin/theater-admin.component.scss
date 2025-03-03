@@ -1,0 +1,160 @@
+#admiMain {
+  display: flex;
+  transition: all 0.3s ease-in-out;
+  margin-top: 30px;
+  width: 97%;
+  height: 85vh;
+}
+
+.content {
+  width: 70%;
+  flex-grow: 1;
+  margin-left: 60px;
+
+  transition: margin-left 0.3s ease-in-out;
+}
+
+.sidebar-open .content {
+  margin-left: 290px;
+}
+
+.adminDiv {
+  height: 100vh;
+  width: 100vw;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.Head {
+  background: #ffffff;
+
+  padding: 40px;
+  border-radius: 15px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.Table {
+  flex-grow: 1;
+  width: 100%;
+}
+
+.user-icon-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: #2563eb;
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease-in-out;
+}
+
+.user-icon-container:hover {
+  transform: scale(1.05);
+}
+
+.user-icon-container i {
+  font-size: 3rem;
+  color: #ffffff;
+}
+
+.user-text {
+  margin-top: 10px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #fff;
+}
+.sidebar {
+  width: 260px;
+  height: 80vh;
+  border-radius: 0px 0px 20px 0px;
+  background: white !important;
+  color: #2563eb;
+  position: fixed;
+  left: -240px;
+  transition: 0.4s ease-in-out;
+  padding-top: 20px;
+
+  &.open {
+    left: 0;
+  }
+
+  .toggle-bars {
+    position: absolute;
+    top: 10px;
+    left: 100%;
+    transform: translateX(0);
+    background: #2563eb;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    padding: 10px;
+    border-radius: 0 5px 5px 0;
+    transition: background 0.3s ease-in-out;
+  }
+
+  &:not(.open) .toggle-bars {
+    left: 100%;
+    transform: translateX(0);
+  }
+
+  .toggle-bars:hover {
+    background: #1e3a8a;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+
+    li {
+      padding: 15px 20px;
+      border-bottom: 1px solid rgba(30, 58, 138, 0.2);
+      transition: background 0.3s ease-in-out;
+
+      &:hover {
+        background: rgba(30, 58, 138, 0.1);
+      }
+
+      a {
+        color: #1e3a8a;
+        text-decoration: none;
+        display: block;
+        font-weight: 500;
+        font-size: 16px;
+        transition: color 0.3s ease-in-out;
+
+        &:hover {
+          color: #2563eb;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    width: 220px;
+    left: -200px;
+
+    &.open {
+      left: 0;
+    }
+
+    .toggle-bars {
+      left: 100%;
+    }
+
+    &:not(.open) .toggle-bars {
+      left: 100%;
+    }
+  }
+}

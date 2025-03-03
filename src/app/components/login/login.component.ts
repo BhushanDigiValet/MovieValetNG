@@ -45,6 +45,7 @@ export class LoginComponent {
         ({ data }) => {
           if (data && data.login) {
              localStorage.setItem('token', data.login.token);
+             localStorage.setItem('role', data.login.role);
             this.router.navigate(['/admin']);
           }
         },

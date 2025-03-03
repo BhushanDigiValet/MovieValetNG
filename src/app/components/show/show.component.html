@@ -1,0 +1,15 @@
+<div>
+  <app-user-menubar></app-user-menubar>
+</div>
+<div class="show">
+  <div class="theaters" *ngFor="let theater of groupedTheaters">
+    <h2>{{ theater.name }}</h2>
+    <ul>
+      <li *ngFor="let show of theater.shows">
+        Show ID: {{ show.id }} | Amount: {{ show.amount }} | Start Time:
+        {{ show.showStartTime }}
+        <button (click)="reserveShow(show)">Reserve</button>
+      </li>
+    </ul>
+  </div>
+</div>

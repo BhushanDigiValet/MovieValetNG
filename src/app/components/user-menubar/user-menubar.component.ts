@@ -1,26 +1,20 @@
-import { Component, OnInit } from '@angular/core';
-import { MenuItem } from 'primeng/api';
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { Menubar } from 'primeng/menubar';
 import { BadgeModule } from 'primeng/badge';
 import { AvatarModule } from 'primeng/avatar';
 import { InputTextModule } from 'primeng/inputtext';
-import { CommonModule } from '@angular/common';
-import { Ripple } from 'primeng/ripple';
+import { RippleModule } from 'primeng/ripple';
+import { MenuItem } from 'primeng/api';
 
 @Component({
   selector: 'app-user-menubar',
-  imports: [
-    Menubar,
-    BadgeModule,
-    AvatarModule,
-    InputTextModule,
-    Ripple,
-    CommonModule,
-  ],
+  standalone: true, // ✅ Add this to make the component standalone
+  imports: [CommonModule, Menubar, BadgeModule, AvatarModule, RippleModule, ],
   templateUrl: './user-menubar.component.html',
   styleUrl: './user-menubar.component.scss',
 })
-export class UserMenubarComponent   {
+export class UserMenubarComponent {
   items: MenuItem[] | undefined;
 
   ngOnInit() {

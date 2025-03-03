@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-//import { Product } from '@/domain/product';
-//import { ProductService } from '@/service/productservice';
 import { Carousel } from 'primeng/carousel';
 import { ButtonModule } from 'primeng/button';
 import { Tag } from 'primeng/tag';
@@ -8,7 +6,8 @@ import { TagModule } from 'primeng/tag';
 
 @Component({
   selector: 'app-movie-carousel',
-  imports: [Carousel, ButtonModule, Tag, TagModule],
+  standalone: true, 
+  imports: [Carousel, Tag, TagModule, ButtonModule],
   templateUrl: './movie-carousel.component.html',
   styleUrl: './movie-carousel.component.scss',
 })
