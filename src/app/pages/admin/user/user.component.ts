@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
 import { UserService } from '../../../services/user/user.service.ts.service';
 import { AddDialogComponent } from '../../../components/add-dialog/add-dialog.component';
 import { DataTableComponent } from '../../../components/data-table/data-table.component';

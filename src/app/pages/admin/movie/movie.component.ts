@@ -119,27 +119,23 @@ export class MovieComponent {
     this.listMovie();
   }
 
-  // ✅ Handle Form Submission
+  
   handleFormSubmit(data: any) {
     console.log('Submitting movie:', data);
-
+    
     this.movieService.addMovie(data).subscribe({
       next: (response) => {
         console.log('Movie added successfully:', response);
 
-        // 🎉 Show success message
         this.messageService.add({
           severity: 'success',
           summary: 'Success',
           detail: 'Movie added successfully!',
         });
-
-        this.visible = false; // Close the form dialog
+        this.visible = false;
       },
       error: (error) => {
         console.error('Error adding movie:', error);
-
-        // ❌ Show error message
         this.messageService.add({
           severity: 'error',
           summary: 'Error',

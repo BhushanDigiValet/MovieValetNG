@@ -1,10 +1,23 @@
 <div class="adminDiv">
   <app-menu-bar></app-menu-bar>
   <div id="admiMain">
-    <app-admin-sidebar></app-admin-sidebar>
     <div class="content">
-     <app-add-dialog></app-add-dialog>
-      <div class="Table"></div>
+     <app-add-dialog
+      [piIcon]="'pi pi-user-edit'"
+      [dialogTitle]="'Theater Admin'"
+      [title]="'Add Show Details'"
+      [description]="'Update your details.'"
+      [btnName]="'Add Show'"
+      [fields]="formFields"
+      (formSubmit)="handleFormSubmit($event)"
+     ></app-add-dialog>
+      <div class="Table">
+        <app-data-table
+        [data]="shows"
+        [columns]="theaterColumns"
+        ></app-data-table>
+      </div>
+
     </div>
   </div>
 </div>

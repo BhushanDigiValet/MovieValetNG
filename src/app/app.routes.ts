@@ -26,5 +26,5 @@ export const routes: Routes = [
     ],
   },
   { path: 'show', component: ShowComponent },
-  { path: 'theater-admin', component: TheaterAdminComponent },
+  { path: 'theater-admin/:id', component: TheaterAdminComponent },
 ];

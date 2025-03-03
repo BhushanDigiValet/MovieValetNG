@@ -8,7 +8,7 @@ import { Observable, tap, catchError, throwError } from 'rxjs';
 export class MovieService {
   constructor(private apollo: Apollo) {}
 
-  // ✅ Get all movies
+ 
   getMovies(): Observable<any> {
     return this.apollo
       .watchQuery({
@@ -36,7 +36,7 @@ export class MovieService {
         `,
       })
       .valueChanges.pipe(
-        tap((response) => console.log('Movies API Response:', response)), 
+        tap((response) => console.log('Movies API Response:', response)),
         catchError((error) => {
           console.error('Error fetching movies:', error);
           return throwError(() => new Error(error));
@@ -72,35 +72,42 @@ export class MovieService {
       );
   }
 
-  // ✅ Add a new movie
   addMovie(input: any): Observable<any> {
+    const payload = {
+      title: input.title,
+      description: input.description,
+      genre: input.genre,
+      imdbRating: input.imdbRating,
+      language: Array.isArray(input.language)
+        ? input.language
+        : [input.language], // Ensure array format
+      posterUrl: input.posterUrl,
+      starCast: Array.isArray(input.starCast)
+        ? input.starCast
+        : [input.starCast], // Ensure array
+      durationMinutes: input.durationMinutes,
+      releaseDate: input.releaseDate,
+    };
+
+    console.log(
+      'Payload being sent:',
+      JSON.stringify({ input: payload }, null, 2)
+    );
+
     return this.apollo.mutate({
       mutation: gql`
         mutation CreateMovie($input: CreateMovieInput!) {
           createMovie(input: $input) {
-            id
+            
             title
             description
-            genre
-            imdbRating
-            language
-            posterUrl
-            starCast {
-              name
-            }
-            durationMinutes
-            releaseDate
+            
           }
         }
       `,
-      variables: {
-        ...input,
-        genreId: input.genre?.id,
-      },
+      variables: { input: payload },
     });
   }
-
-  // ✅ Update an existing movie
   updateMovie(
     movieId: string,
     movieData: Partial<{

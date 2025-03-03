@@ -2,30 +2,35 @@ import { Component, OnInit } from '@angular/core';
 import { Carousel } from 'primeng/carousel';
 import { ButtonModule } from 'primeng/button';
 import { Tag } from 'primeng/tag';
-import { TagModule } from 'primeng/tag';
+import { MovieService } from '../../services/admin/movie.service';
+
+export interface CarouselMovie {
+  title: string;
+  image: string;
+  rating: number;
+}
 
 @Component({
   selector: 'app-movie-carousel',
-  standalone: true, 
-  imports: [Carousel, Tag, TagModule, ButtonModule],
+  standalone: true,
+  imports: [Carousel, Tag, ButtonModule],
   templateUrl: './movie-carousel.component.html',
   styleUrl: './movie-carousel.component.scss',
 })
-export class MovieCarouselComponent {
-  movies = [
-    { title: 'Inception', image: 'assets/images/moviePoster.jpg', rating: 8.8 },
-    {
-      title: 'Interstellar',
-      image: 'assets/images/moviePoster.jpg',
-      rating: 8.6,
-    },
-    {
-      title: 'The Dark Knight',
-      image: 'assets/images/moviePoster.jpg',
-      rating: 9.0,
-    },
-    { title: 'Avatar', image: 'assets/images/moviePoster.jpg', rating: 7.8 },
-  ];
+export class MovieCarouselComponent implements OnInit {
+  movies: CarouselMovie[] = [];
+
+  constructor(private movieService: MovieService) {}
+
+  ngOnInit() {
+    this.movieService.getMovies().subscribe(({ data }) => {
+      this.movies = data.movies.map((movie: any) => ({
+        title: movie.title,
+        image: movie.posterUrl,
+        rating: movie.imdbRating,
+      }));
+    });
+  }
 
   responsiveOptions = [
     { breakpoint: '1024px', numVisible: 3, numScroll: 3 },

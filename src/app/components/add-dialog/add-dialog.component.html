@@ -85,11 +85,35 @@
               ></p-multiSelect>
 
               <!-- Date Picker -->
+              <!-- Date Picker for Show Date -->
               <p-calendar
                 *ngSwitchCase="'date'"
                 [showIcon]="true"
                 [formControlName]="field.name"
                 [placeholder]="field.placeholder"
+                dateFormat="yy-mm-dd"
+              ></p-calendar>
+
+              <!-- Time Picker for Start Time -->
+              <p-calendar
+                *ngIf="field.name === 'showStartTime'"
+                [showIcon]="true"
+                [formControlName]="field.name"
+                [placeholder]="field.placeholder"
+                hourFormat="24"
+                [showTime]="true"
+                timeOnly="true"
+              ></p-calendar>
+
+              <!-- Time Picker for End Time -->
+              <p-calendar
+                *ngIf="field.name === 'showEndTime'"
+                [showIcon]="true"
+                [formControlName]="field.name"
+                [placeholder]="field.placeholder"
+                hourFormat="24"
+                [showTime]="true"
+                timeOnly="true"
               ></p-calendar>
               <!-- Dynamic Array Inputs (Star Cast) -->
               <div

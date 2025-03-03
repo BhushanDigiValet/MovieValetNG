@@ -7,6 +7,15 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { UserService } from '../../services/user/user.service.ts.service';
+import {jwtDecode} from 'jwt-decode';
+
+interface TokenPayload {
+  id: string;
+  username: string;
+  role: string;
+  iat: number;
+  exp: number;
+}
 
 @Component({
   selector: 'app-login',
@@ -44,9 +53,25 @@ export class LoginComponent {
       this.userService.login(email, password).subscribe(
         ({ data }) => {
           if (data && data.login) {
-             localStorage.setItem('token', data.login.token);
-             localStorage.setItem('role', data.login.role);
-            this.router.navigate(['/admin']);
+            localStorage.setItem('token', data.login.token);
+            
+             const decodedToken: TokenPayload = jwtDecode<TokenPayload>(
+               data.login.token
+             );
+
+             switch (decodedToken.role) {
+               case 'ADMIN':
+                 this.router.navigate(['/admin']);
+                 break;
+               case 'CUSTOMER':
+                 this.router.navigate(['/home']);
+                 break;
+                case 'THEATER_ADMIN':
+                  this.router.navigate(['theater-admin', decodedToken.id]);
+                  break;
+               default:
+                 this.router.navigate(['/register']);
+             }
           }
         },
         (error) => {

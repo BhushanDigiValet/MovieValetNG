@@ -33,6 +33,7 @@ export class UserService {
         mutation Login($input: LoginInput!) {
           login(input: $input) {
             token
+            role
           }
         }
       `,

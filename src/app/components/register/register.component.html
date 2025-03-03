@@ -22,16 +22,16 @@
     </div>
 
     <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-      <label for="name" class="block text-900 font-medium mb-2"
+      <label for="username" class="block text-900 font-medium mb-2"
         >Full Name</label
       >
       <input
-        id="name"
+        id="username"
         type="text"
         placeholder="Enter your name"
         pInputText
         class="w-full mb-3"
-        formControlName="name"
+        formControlName="username"
       />
 
       <label for="email" class="block text-900 font-medium mb-2">Email</label>
