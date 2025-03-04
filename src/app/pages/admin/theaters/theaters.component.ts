@@ -75,7 +75,6 @@ export class TheatersComponent {
 
   onDialogSubmit(formData: any) {
     console.log('Form submitted:', formData);
-    // Handle form submission (e.g., send data to an API)
   }
   handleFormSubmit(data: any) {
     console.log(data);

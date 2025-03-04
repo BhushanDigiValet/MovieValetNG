@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { UserMenubarComponent } from '../user-menubar/user-menubar.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ShowService } from '../../services/theater/show.service';
+import { ShowStorageService } from '../../services/user/show-storage.service';
 
 interface Theater {
   id: string;
@@ -11,9 +14,12 @@ interface Theater {
 
 interface Show {
   id: string;
+  title: string;
   amount: number;
   theaterId: { id: string; name: string };
   showStartTime: string;
+  description: string;
+  posterUrl: string;
 }
 
 @Component({
@@ -23,39 +29,63 @@ interface Show {
   imports: [UserMenubarComponent, CommonModule, FormsModule],
 })
 export class ShowComponent implements OnInit {
-  shows: Show[] = [
-    {
-      id: '1',
-      amount: 500,
-      theaterId: { id: 't1', name: 'Grand Cinema' },
-      showStartTime: '2025-03-02T18:00:00',
-    },
-    {
-      id: '2',
-      amount: 450,
-      theaterId: { id: 't1', name: 'Grand Cinema' },
-      showStartTime: '2025-03-02T20:00:00',
-    },
-    {
-      id: '3',
-      amount: 600,
-      theaterId: { id: 't2', name: 'Royal Theater' },
-      showStartTime: '2025-03-02T19:00:00',
-    },
-    {
-      id: '4',
-      amount: 550,
-      theaterId: { id: 't2', name: 'Royal Theater' },
-      showStartTime: '2025-03-02T21:00:00',
-    },
-  ];
-
+  movieId: string = '';
+  shows: Show[] = [];
   groupedTheaters: Theater[] = [];
   filteredTheaters: Theater[] = [];
   searchText: string = '';
 
+  constructor(
+    private route: ActivatedRoute,
+    private showService: ShowService,
+    private router: Router,
+    private showStorageService: ShowStorageService
+  ) {}
+
   ngOnInit(): void {
-    this.groupShowsByTheater();
+    this.route.params.subscribe((params) => {
+      this.movieId = params['id'];
+
+      if (this.movieId) {
+        this.fetchShows();
+      } else {
+        console.error('Movie ID is undefined!');
+      }
+    });
+  }
+
+  fetchShows(): void {
+    console.log(`Fetching shows for movie ID: ${this.movieId}`);
+
+    this.showService.getShowsMovieId(this.movieId).subscribe(
+      ({ data }) => {
+        console.log('Fetched show data:', data);
+
+        if (!data || !data.shows) {
+          console.error('No shows found in API response');
+          return;
+        }
+
+        this.shows = data.shows.map((show: any) => ({
+          id: show.id,
+          title: show.movieId?.title || 'Unknown Movie',
+          description: show.movieId?.description || 'Unknown description',
+          posterUrl: show.movieId?.posterUrl || 'Unknown posterUrl',
+          amount: show.amount,
+          theaterId: show.theaterId
+            ? { id: show.theaterId.id, name: show.theaterId.name }
+            : { id: 'unknown', name: 'Unknown Theater' },
+          showStartTime: show.showStartTime
+            ? new Date(parseInt(show.showStartTime)).toISOString()
+            : 'N/A',
+        }));
+
+        this.groupShowsByTheater();
+      },
+      (error) => {
+        console.error('Error fetching shows:', error);
+      }
+    );
   }
 
   private groupShowsByTheater(): void {
@@ -87,9 +117,9 @@ export class ShowComponent implements OnInit {
     this.filteredTheaters = [...this.groupedTheaters]; // Reset to original data
   }
 
-  reserveShow(show: Show): void {
-    console.log(
-      `Reserved Show ID: ${show.id}, Theater ID: ${show.theaterId.id}`
-    );
+  reserveShow(show: any): void {
+    console.log(show);
+    this.showStorageService.setShow(show);
+    this.router.navigate(['reservation', show.id]);
   }
 }

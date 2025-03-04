@@ -1,0 +1,41 @@
+ .cinema-container {
+      text-align: center;
+      font-family: Arial, sans-serif;
+      background-color: white;
+      color: black;
+      padding: 20px;
+      border-radius: 30px;
+    }
+    .stage {
+      background: #10B981;
+      color: white;
+      padding: 10px;
+      margin-bottom: 20px;
+      font-weight: bold;
+    }
+    .seat-grid {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .seat-row {
+      display: flex;
+      justify-content: center;
+      margin: 5px 0;
+    }
+    .seat {
+      width: 40px;
+      height: 40px;
+      margin: 5px;
+      text-align: center;
+      line-height: 40px;
+      border-radius: 5px;
+      cursor: pointer;
+      background: lightgray;
+      transition: background 0.3s;
+      color: black;
+    }
+    .seat.selected {
+      background: #10B981;
+      color: white;
+    }

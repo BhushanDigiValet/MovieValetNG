@@ -47,6 +47,7 @@ export class ShowService {
             movieId {
               title
               id
+             
             }
           }
         }
@@ -56,7 +57,33 @@ export class ShowService {
       },
     }).valueChanges;
   }
-  createShow(showData: Show): Observable<any>{
+  getShowsMovieId(movieId: string): Observable<any> {
+    return this.apollo.watchQuery({
+      query: gql`
+        query Shows($movieId: ID) {
+          shows(movieId: $movieId) {
+            id
+            showStartTime
+            showEndTime
+            amount
+            movieId {
+              title
+              id
+              description
+              posterUrl
+            }
+            theaterId {
+              name
+            }
+          }
+        }
+      `,
+      variables: {
+        movieId,
+      },
+    }).valueChanges;
+  }
+  createShow(showData: Show): Observable<any> {
     return this.apollo.mutate({
       mutation: gql`
         mutation CreateShow($input: CreateShowInput!) {
@@ -82,5 +109,5 @@ export class ShowService {
         },
       },
     });
-  };
+  }
 }

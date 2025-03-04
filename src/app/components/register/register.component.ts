@@ -24,7 +24,7 @@ interface RegisterForm {
   standalone: true, //
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],
-  imports: [ReactiveFormsModule, CheckboxModule, InputTextModule, ButtonModule], // ✅ Import ReactiveFormsModule
+  imports: [ReactiveFormsModule, CheckboxModule, InputTextModule, ButtonModule],
 })
 export class RegisterComponent {
   registerForm: FormGroup;

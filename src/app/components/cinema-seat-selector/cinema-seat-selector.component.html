@@ -1,0 +1,15 @@
+<div class="cinema-container">
+      <h2>Cinema seat plan</h2>
+      <p>Click to select</p>
+      <div class="stage">SCREEN</div>
+      <div class="seat-grid">
+        <div *ngFor="let row of rows" class="seat-row">
+          <div *ngFor="let col of columns" 
+               class="seat" 
+               [class.selected]="isSelected(row + col)" 
+               (click)="toggleSeat(row + col)">
+            {{ row }}{{ col }}
+          </div>
+        </div>
+      </div>
+    </div>

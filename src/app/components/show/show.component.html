@@ -2,7 +2,6 @@
   <app-user-menubar></app-user-menubar>
 </div>
 
-<!-- Filter Section -->
 <div class="filter-section">
   <input
     type="text"
@@ -18,11 +17,11 @@
     <h2>{{ theater.name }}</h2>
     <ul>
       <li *ngFor="let show of theater.shows">
-        <span>Show ID: <strong>{{ show.id }}</strong></span>
+        <span>Movie: <strong>{{ show.title }}</strong></span>
         <span>Amount: <strong>{{ show.amount }}</strong></span>
         <span>Date: <strong>{{ show.showStartTime | date : 'yyyy-MM-dd' }}</strong></span>
         <span>Time: <strong>{{ show.showStartTime | date : 'HH:mm' }}</strong></span>
-        <button (click)="reserveShow(show)">Reserve</button>
+        <button (click)="reserveShow(show)">Book</button>
       </li>
     </ul>
   </div>

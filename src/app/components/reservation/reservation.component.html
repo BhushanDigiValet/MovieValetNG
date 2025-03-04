@@ -1,0 +1,94 @@
+<app-user-menubar></app-user-menubar>
+<div class="reservation-container">
+  <div class="page">
+    <div class="seat">
+      <!-- Bind (seatSelection) event -->
+      <app-cinema-seat-selector
+        (seatSelection)="updateSelectedSeats($event)"
+      ></app-cinema-seat-selector>
+    </div>
+
+    <div class="details">
+      <div class="card">
+        <h2>{{ selectedShow?.title }}</h2>
+        <p class="description">{{ selectedShow?.description }}</p>
+        <p><strong>Price per seat:</strong> ₹{{ selectedShow?.amount }}</p>
+        <p><strong>Theater:</strong> {{ selectedShow?.theaterId?.name }}</p>
+        <p>
+          <strong>Show Time:</strong>
+          {{ getFormattedDate(selectedShow?.showStartTime) }}
+        </p>
+
+        <!-- Display selected seats -->
+        <div class="seats-container">
+          <label for="seats">Seats:</label>
+          <input
+            id="seats"
+            type="text"
+            [value]="selectedSeats.join(', ')"
+            readonly
+          />
+        </div>
+
+        <!-- Display Total Price -->
+        <p><strong>Total Price:</strong> ₹{{ totalAmount }}</p>
+
+        <div class="card flex justify-center">
+          <p-button (click)="showDialog()" label="Pay" />
+          <p-dialog
+            header="Pay"
+            [modal]="true"
+            [(visible)]="visible"
+            [style]="{ width: '25rem' }"
+          >
+            <span class="p-text-secondary block mb-8">Card information.</span>
+
+            <div class="flex items-center gap-4 mb-4">
+              <label for="cardNumber" class="font-semibold w-24"
+                >Card Number</label
+              >
+              <input
+                type="number"
+                pInputText
+                id="cardNumber"
+                class="flex-auto"
+                [(ngModel)]="cardNumber"
+              />
+            </div>
+
+            <div class="flex items-center gap-4 mb-8">
+              <label for="cvv" class="font-semibold w-24">Cvv</label>
+              <input
+                type="number"
+                pInputText
+                id="cvv"
+                class="flex-auto"
+                [(ngModel)]="cvv"
+              />
+            </div>
+
+            <div class="flex items-center gap-4 mb-4">
+              <label for="pin" class="font-semibold w-24">Pin</label>
+              <input
+                type="number"
+                pInputText
+                id="pin"
+                class="flex-auto"
+                [(ngModel)]="pin"
+              />
+            </div>
+
+            <div class="flex justify-end gap-2">
+              <p-button
+                label="Cancel"
+                severity="secondary"
+                (click)="visible = false"
+              />
+              <p-button label="Pay" (click)="pay()" />
+            </div>
+          </p-dialog>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

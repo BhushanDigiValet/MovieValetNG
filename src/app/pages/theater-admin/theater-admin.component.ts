@@ -88,7 +88,7 @@ export class TheaterAdminComponent implements OnInit {
 
   ngOnInit() {
     this.adminId = this.route.snapshot.paramMap.get('id') || '';
-    console.log('Admin ID:', this.adminId);
+    //console.log('Admin ID:', this.adminId);
 
     this.showService.getTheater(this.adminId).subscribe({
       next: ({ data }) => {

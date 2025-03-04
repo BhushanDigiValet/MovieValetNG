@@ -86,7 +86,7 @@ export class UserComponent implements OnInit {
     this.userService.register(data).subscribe({
       next: () => {
         console.log('User registered successfully:', data);
-        this.loadUsers(); // Refresh users list
+        this.loadUsers(); 
       },
       error: (err) => console.error('Registration failed:', err),
     });
@@ -97,7 +97,7 @@ export class UserComponent implements OnInit {
     this.userService.updateUser(updatedUser.id!, updatedUser).subscribe({
       next: () => {
         console.log('User updated:', updatedUser);
-        this.loadUsers(); // Refresh list
+        this.loadUsers(); 
       },
       error: (err) => console.error('Error updating user:', err),
     });
