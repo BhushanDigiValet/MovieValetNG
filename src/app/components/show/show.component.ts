@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { UserMenubarComponent } from "../user-menubar/user-menubar.component";
+import { UserMenubarComponent } from '../user-menubar/user-menubar.component';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+
 interface Theater {
   id: string;
   name: string;
@@ -18,7 +20,7 @@ interface Show {
   selector: 'app-show',
   templateUrl: './show.component.html',
   styleUrls: ['./show.component.scss'],
-  imports: [UserMenubarComponent, CommonModule],
+  imports: [UserMenubarComponent, CommonModule, FormsModule],
 })
 export class ShowComponent implements OnInit {
   shows: Show[] = [
@@ -47,7 +49,10 @@ export class ShowComponent implements OnInit {
       showStartTime: '2025-03-02T21:00:00',
     },
   ];
+
   groupedTheaters: Theater[] = [];
+  filteredTheaters: Theater[] = [];
+  searchText: string = '';
 
   ngOnInit(): void {
     this.groupShowsByTheater();
@@ -68,6 +73,18 @@ export class ShowComponent implements OnInit {
     });
 
     this.groupedTheaters = Array.from(theaterMap.values());
+    this.filteredTheaters = [...this.groupedTheaters]; // Initialize filtered list
+  }
+
+  filterTheaters(): void {
+    this.filteredTheaters = this.groupedTheaters.filter((theater) =>
+      theater.name.toLowerCase().includes(this.searchText.toLowerCase())
+    );
+  }
+
+  clearFilter(): void {
+    this.searchText = '';
+    this.filteredTheaters = [...this.groupedTheaters]; // Reset to original data
   }
 
   reserveShow(show: Show): void {
