@@ -11,6 +11,7 @@ import { UserHomeComponent } from './pages/user/user-home/user-home.component';
 import { ShowComponent } from './components/show/show.component';
 import { ReservationComponent } from './components/reservation/reservation.component';
 import { UserShowComponent } from './pages/user/user-show/user-show.component';
+import { BookingComponent } from './components/booking/booking.component';
 
 export const routes: Routes = [
   { path: 'register', component: RegisterComponent },
@@ -28,7 +29,8 @@ export const routes: Routes = [
     ],
   },
   { path: 'theater-admin/:id', component: TheaterAdminComponent },
-  {path: 'user', component: UserShowComponent},
+  { path: 'user', component: UserShowComponent },
   { path: 'show/:id', component: ShowComponent },
+  { path: 'booking', component: BookingComponent },
   { path: 'reservation/:id', component: ReservationComponent },
 ];

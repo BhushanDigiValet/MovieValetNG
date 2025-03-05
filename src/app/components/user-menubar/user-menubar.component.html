@@ -56,7 +56,7 @@
         </ng-template>
         <ng-template #item let-item let-root="root">
             
-            <a pRipple class="flex items-center p-menubar-item-link">
+            <a pRipple class="flex items-center p-menubar-item-link" (click)="navigateTo(item.path)">
                 
                 <i class="{{item.icon}}"></i>
                 <span>{{ item.label }}</span>

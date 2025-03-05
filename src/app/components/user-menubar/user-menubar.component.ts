@@ -6,6 +6,7 @@ import { AvatarModule } from 'primeng/avatar';
 import { InputTextModule } from 'primeng/inputtext';
 import { RippleModule } from 'primeng/ripple';
 import { MenuItem } from 'primeng/api';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-menubar',
@@ -17,14 +18,18 @@ import { MenuItem } from 'primeng/api';
 export class UserMenubarComponent {
   items: MenuItem[] | undefined;
 
+  constructor(private router:Router) {}
+
   ngOnInit() {
     this.items = [
       {
         label: 'MovieValet',
+        path:'',
       },
       {
         label: 'Home',
         icon: 'pi pi-home',
+        path: '/home',
       },
       {
         label: 'User Options',
@@ -38,6 +43,7 @@ export class UserMenubarComponent {
           },
           {
             label: 'Bookings',
+             path: '/booking',
             icon: 'pi pi-server',
             shortcut: '⌘+B',
           },
@@ -46,11 +52,15 @@ export class UserMenubarComponent {
           },
           {
             label: 'Logout',
+            path: '/login',
             icon: 'pi pi-power-off',
             shortcut: '⌘+U',
           },
         ],
       },
     ];
+  }
+  navigateTo(path: string) {
+    this.router.navigate([path]);
   }
 }
