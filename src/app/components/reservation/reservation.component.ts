@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router'; // ✅ Import ActivatedRoute
+import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router'; // ✅ Import ActivatedRoute
 import { UserMenubarComponent } from '../user-menubar/user-menubar.component';
 import { CinemaSeatSelectorComponent } from '../cinema-seat-selector/cinema-seat-selector.component';
 import { ShowStorageService } from '../../services/user/show-storage.service';
@@ -8,7 +8,7 @@ import { Dialog } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { TransactionService } from '../../services/user/transaction.service';
-import { log } from 'console';
+import { forkJoin } from 'rxjs';
 
 interface MovieData {
   id: string;
@@ -46,12 +46,12 @@ export class ReservationComponent implements OnInit {
   transactionId: string = '';
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private showStorageService: ShowStorageService,
     private transactionService: TransactionService
   ) {}
 
   ngOnInit() {
-    // ✅ Get Transaction ID from URL
     this.createTransactionId = this.route.snapshot.paramMap.get('id') || '';
 
     this.selectedShow = this.showStorageService.getShow();
@@ -79,13 +79,23 @@ export class ReservationComponent implements OnInit {
     }
   }
   reservation() {
-    const data = {
-      showId: this.createTransactionId,
-      transactionId: this.transactionId,
-      seatNumber: this.selectedSeats[0],
-    };
-    this.transactionService.reservation(data).subscribe((data) => {
+    if (!this.selectedSeats.length) {
+      console.error('No seats selected.');
+      return;
+    }
+
+    this.selectedSeats.map((seat) => {
+      console.log(seat);
+
+      const data = {
+        showId: this.createTransactionId,
+        transactionId: this.transactionId,
+        seatNumber: seat,
+      };
       console.log(data);
+      this.transactionService.reservation(data).subscribe(({ data }) => {
+        console.log(data);
+      });
     });
   }
   pay() {
@@ -107,16 +117,14 @@ export class ReservationComponent implements OnInit {
     this.transactionService.transaction(transactionData).subscribe({
       next: (response) => {
         this.transactionId = response.data.createTransaction.id;
-        console.log(
-          'Transaction Successful:',
-          response.data.createTransaction.id
-        );
+        console.log('Transaction Successful:', this.transactionId);
+        this.reservation();
       },
       error: (err) => {
         console.error('Transaction Failed:', err);
       },
     });
-    this.reservation();
+
     this.visible = false;
   }
 }

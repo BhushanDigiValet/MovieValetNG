@@ -12,12 +12,18 @@ import { ShowComponent } from './components/show/show.component';
 import { ReservationComponent } from './components/reservation/reservation.component';
 import { UserShowComponent } from './pages/user/user-show/user-show.component';
 import { BookingComponent } from './components/booking/booking.component';
+import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
   { path: '', component: HomeComponent },
-  { path: 'home', component: UserHomeComponent },
+  {
+    path: 'home',
+    component: UserHomeComponent,
+    canActivate: [authGuard],
+    data: { roles: ['CUSTOMER'] },
+  },
   {
     path: 'admin',
     component: AdminComponent,
@@ -30,7 +36,22 @@ export const routes: Routes = [
   },
   { path: 'theater-admin/:id', component: TheaterAdminComponent },
   { path: 'user', component: UserShowComponent },
-  { path: 'show/:id', component: ShowComponent },
-  { path: 'booking', component: BookingComponent },
-  { path: 'reservation/:id', component: ReservationComponent },
+  {
+    path: 'show/:id',
+    component: ShowComponent,
+    canActivate: [authGuard],
+    data: { roles: ['CUSTOMER'] },
+  },
+  {
+    path: 'booking',
+    component: BookingComponent,
+    canActivate: [authGuard],
+    data: { roles: ['CUSTOMER'] },
+  },
+  {
+    path: 'reservation/:id',
+    component: ReservationComponent,
+    canActivate: [authGuard],
+    data: { roles: ['CUSTOMER'] },
+  },
 ];

@@ -99,23 +99,51 @@ export class UserService {
     });
   }
   deleteUser(userId: string): Observable<any> {
-    return this.apollo.mutate({
-      mutation: gql`
-        mutation DeleteUser($deleteUserId: ID!) {
-          deleteUser(id: $deleteUserId) {
+    return this.apollo
+      .mutate({
+        mutation: gql`
+          mutation DeleteUser($deleteUserId: ID!) {
+            deleteUser(id: $deleteUserId) {
+              id
+              username
+            }
+          }
+        `,
+        variables: {
+          deleteUserId: userId,
+        },
+      })
+      .pipe(
+        tap((response) => console.log('DeleteUser Response:', response)),
+        catchError((error) => {
+          console.error('Apollo delete mutation error:', error);
+          return throwError(error);
+        })
+      );
+  }
+  getReservation(): Observable<any> {
+    return this.apollo.watchQuery({
+      query: gql`
+        query GetReservations {
+          getReservations {
             id
-            username
+            userId
+            showId {
+              movieId {
+                title
+                id
+                posterUrl
+              }
+              theaterId {
+                name
+                id
+              }
+              showStartTime
+            }
+            seatNumber
           }
         }
       `,
-      variables: {
-        deleteUserId: userId,
-      },
-    }).pipe(
-    tap(response => console.log('DeleteUser Response:', response)),
-    catchError(error => {
-      console.error('Apollo delete mutation error:', error);
-      return throwError(error);
-    }))
+    }).valueChanges;
   }
 }

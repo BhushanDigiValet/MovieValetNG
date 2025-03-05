@@ -34,26 +34,22 @@ export class TransactionService {
     });
   }
   reservation(data: any): Observable<any> {
-     return this.apollo.mutate({
-       mutation: gql`
-         mutation Mutation($input: ReservationInput!) {
-           createReservation(input: $input) {
-             userId
-             id
-             showId
-             transactionId
-             qrTicket
-             seatNumber
-           }
-         }
-       `,
-       variables: {
-         input: {
-           showId: data.showId,
-           transactionId: data.transaction,
-           seatNumber: data.seatNumber,
-         },
-       },
-     });
+    return this.apollo.mutate({
+      mutation: gql`
+        mutation Mutation($input: ReservationInput!) {
+          createReservation(input: $input) {
+            id
+            seatNumber
+          }
+        }
+      `,
+      variables: {
+        input: {
+          showId: data.showId,
+          transactionId: data.transactionId,
+          seatNumber: data.seatNumber,
+        },
+      },
+    });
   }
 }

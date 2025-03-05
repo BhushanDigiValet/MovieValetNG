@@ -62,12 +62,15 @@ export class LoginComponent {
              switch (decodedToken.role) {
                case 'ADMIN':
                  this.router.navigate(['/admin']);
+                 localStorage.setItem('userRole', 'ADMIN');
                  break;
                case 'CUSTOMER':
                  this.router.navigate(['/home']);
+                 localStorage.setItem('userRole', 'CUSTOMER');
                  break;
                 case 'THEATER_ADMIN':
                   this.router.navigate(['theater-admin', decodedToken.id]);
+                  localStorage.setItem('userRole', 'THEATER_ADMIN');
                   break;
                default:
                  this.router.navigate(['/register']);

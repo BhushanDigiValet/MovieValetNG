@@ -103,7 +103,7 @@ export class ShowComponent implements OnInit {
     });
 
     this.groupedTheaters = Array.from(theaterMap.values());
-    this.filteredTheaters = [...this.groupedTheaters]; // Initialize filtered list
+    this.filteredTheaters = [...this.groupedTheaters]; 
   }
 
   filterTheaters(): void {
@@ -114,7 +114,7 @@ export class ShowComponent implements OnInit {
 
   clearFilter(): void {
     this.searchText = '';
-    this.filteredTheaters = [...this.groupedTheaters]; // Reset to original data
+    this.filteredTheaters = [...this.groupedTheaters];
   }
 
   reserveShow(show: any): void {

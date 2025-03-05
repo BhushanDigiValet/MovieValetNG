@@ -5,6 +5,7 @@
       <!-- Bind (seatSelection) event -->
       <app-cinema-seat-selector
         (seatSelection)="updateSelectedSeats($event)"
+        [showId]="createTransactionId"
       ></app-cinema-seat-selector>
     </div>
 

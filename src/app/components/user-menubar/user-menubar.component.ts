@@ -7,24 +7,25 @@ import { InputTextModule } from 'primeng/inputtext';
 import { RippleModule } from 'primeng/ripple';
 import { MenuItem } from 'primeng/api';
 import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-user-menubar',
   standalone: true, // ✅ Add this to make the component standalone
-  imports: [CommonModule, Menubar, BadgeModule, AvatarModule, RippleModule, ],
+  imports: [CommonModule, Menubar, BadgeModule, AvatarModule, RippleModule],
   templateUrl: './user-menubar.component.html',
   styleUrl: './user-menubar.component.scss',
 })
 export class UserMenubarComponent {
   items: MenuItem[] | undefined;
 
-  constructor(private router:Router) {}
+  constructor(private router: Router, private auth: AuthService) {}
 
   ngOnInit() {
     this.items = [
       {
         label: 'MovieValet',
-        path:'',
+        path: '',
       },
       {
         label: 'Home',
@@ -43,7 +44,7 @@ export class UserMenubarComponent {
           },
           {
             label: 'Bookings',
-             path: '/booking',
+            path: '/booking',
             icon: 'pi pi-server',
             shortcut: '⌘+B',
           },
@@ -61,6 +62,9 @@ export class UserMenubarComponent {
     ];
   }
   navigateTo(path: string) {
+    if (path === '/login') {
+      this.auth.logout();
+    }
     this.router.navigate([path]);
   }
 }

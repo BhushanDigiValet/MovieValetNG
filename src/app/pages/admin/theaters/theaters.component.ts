@@ -1,19 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-
-
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { AddDialogComponent } from '../../../components/add-dialog/add-dialog.component';
 import { TheaterService } from '../../../services/admin/theater.service';
 import { DataTableComponent } from '../../../components/data-table/data-table.component';
 
-
 @Component({
   selector: 'app-theaters',
   imports: [
     ButtonModule,
     InputTextModule,
-    
+
     AddDialogComponent,
     DataTableComponent,
   ],
@@ -60,7 +57,7 @@ export class TheatersComponent {
     },
   ];
 
-  theater = [];
+  theater: any[] = [];
   theaterColumns = [
     { field: 'name', header: 'Name' },
     { field: 'username', header: 'Admin name' },
@@ -99,5 +96,18 @@ export class TheatersComponent {
         email: th.adminId.email,
       }));
     });
+  }
+
+  deleteTheater(theater: any) {
+    console.log(theater.id);
+    if (theater.id) {
+      this.theaterService.deleteTheater(theater.id).subscribe((data) => {
+        console.log(data);
+        console.log(data.deleteTheater.id);
+        this.theater = this.theater.filter(
+          (th) => th.id !== data.deleteTheater.id
+        );
+      });
+    }
   }
 }

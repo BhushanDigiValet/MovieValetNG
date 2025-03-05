@@ -21,7 +21,7 @@ import { DataTableComponent } from '../../../components/data-table/data-table.co
 })
 export class MovieComponent {
   visible: boolean = false;
-  movies: [] = [];
+  movies:any[] = [];
 
   movieColumns = [
     { field: 'title', header: 'Title' },
@@ -119,10 +119,9 @@ export class MovieComponent {
     this.listMovie();
   }
 
-  
   handleFormSubmit(data: any) {
     console.log('Submitting movie:', data);
-    
+
     this.movieService.addMovie(data).subscribe({
       next: (response) => {
         console.log('Movie added successfully:', response);
@@ -150,7 +149,7 @@ export class MovieComponent {
       next: (response) => {
         this.movies = response.data.movies.map((movie: any) => ({
           ...movie,
-          genreName: movie.genre?.name || 'N/A', // ✅ Extract genre name
+          genreName: movie.genre?.name || 'N/A',
         }));
         console.log('Movies:', this.movies);
       },
@@ -158,6 +157,16 @@ export class MovieComponent {
     });
   }
 
-  deleteMovie(movieData: any) {}
+  deleteMovie(movieData: any) {
+    console.log(movieData.id);
+    if (movieData.id) {
+      this.movieService.deleteMovie(movieData.id).subscribe(({ data }) => {
+        console.log(data);
+        this.movies = this.movies.filter(
+          (movie) => movie.id !== data.deleteMovie.id
+        );
+      });
+    }
+  }
   updateMovie(movieData: any) {}
 }

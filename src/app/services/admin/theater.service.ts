@@ -57,4 +57,18 @@ export class TheaterService {
       `,
     }).valueChanges;
   }
+  deleteTheater(theaterId: string): Observable<any> {
+    return this.apollo.mutate({
+      mutation: gql`
+        mutation DeleteTheater($deleteTheaterId: ID!) {
+          deleteTheater(id: $deleteTheaterId) {
+            id
+          }
+        }
+      `,
+      variables: {
+        deleteTheaterId: theaterId,
+      },
+    });
+  }
 }

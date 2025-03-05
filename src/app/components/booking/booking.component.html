@@ -1,2 +1,28 @@
 <app-user-menubar></app-user-menubar>
-<p>booking works!</p>
+
+<div class="booking-container">
+  <h1>Your Reservations</h1>
+
+  <div *ngIf="reservations.length > 0; else noReservations">
+    <div *ngFor="let reservation of reservations" class="reservation-card">
+      <img
+        [src]="reservation.showId.movieId.posterUrl"
+        alt="Movie Poster"
+        class="poster"
+      />
+      <div class="details">
+        <h2>{{ reservation.showId.movieId.title }}</h2>
+        <p>Theater: {{ reservation.showId.theaterId.name }}</p>
+        <p>
+          Show Time: {{ reservation.showId.showStartTime | date : "medium" }}
+        </p>
+        <p>Seat: {{ reservation.seatNumber }}</p>
+        <button class="cancel-btn">Cancel Reservation</button>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #noReservations>
+    <p>No reservations found.</p>
+  </ng-template>
+</div>

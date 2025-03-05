@@ -47,7 +47,6 @@ export class ShowService {
             movieId {
               title
               id
-             
             }
           }
         }
@@ -109,5 +108,19 @@ export class ShowService {
         },
       },
     });
+  }
+  getReservedSeat(showId: string): Observable<any> {
+    return this.apollo.watchQuery({
+      query: gql`
+        query GetReservations($showId: ID!) {
+          getReservations(showId: $showId) {
+            seatNumber
+          }
+        }
+      `,
+      variables: {
+        showId: showId,
+      },
+    }).valueChanges;
   }
 }
