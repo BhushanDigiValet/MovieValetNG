@@ -1,0 +1,28 @@
+<div class="p-mb-3">
+      <span class="p-float-label">
+        <input pInputText type="text" [(ngModel)]="filterUsername" placeholder="Search by username" />
+      </span>
+    </div>
+    <div class="p-mb-3">
+      <span class="p-float-label">
+        <p-dropdown [options]="roles" [(ngModel)]="selectedRole" placeholder="Filter by role" (onChange)="filteredUsers"></p-dropdown>
+      </span>
+    </div>
+    <p-table [value]="filteredUsers" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[5, 10, 20]">
+      <ng-template pTemplate="header">
+        <tr>
+          <th pSortableColumn="username">Username <p-sortIcon field="username"></p-sortIcon></th>
+          <th pSortableColumn="role">Role <p-sortIcon field="role"></p-sortIcon></th>
+          <th>Email</th>
+          <th>City</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-user>
+        <tr>
+          <td>{{ user.username }}</td>
+          <td>{{ user.role }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.cityId?.name || 'N/A' }}</td>
+        </tr>
+      </ng-template>
+    </p-table>

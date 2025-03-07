@@ -8,6 +8,7 @@ import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { UserService } from '../../services/user/user.service.ts.service';
 import {jwtDecode} from 'jwt-decode';
+import { AuthService } from '../../services/auth.service';
 
 interface TokenPayload {
   id: string;
@@ -37,7 +38,8 @@ export class LoginComponent {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private userService: UserService
+    private userService: UserService,
+    private authService: AuthService
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required]],
@@ -53,28 +55,7 @@ export class LoginComponent {
       this.userService.login(email, password).subscribe(
         ({ data }) => {
           if (data && data.login) {
-            localStorage.setItem('token', data.login.token);
-            
-             const decodedToken: TokenPayload = jwtDecode<TokenPayload>(
-               data.login.token
-             );
-
-             switch (decodedToken.role) {
-               case 'ADMIN':
-                 this.router.navigate(['/admin']);
-                 localStorage.setItem('userRole', 'ADMIN');
-                 break;
-               case 'CUSTOMER':
-                 this.router.navigate(['/home']);
-                 localStorage.setItem('userRole', 'CUSTOMER');
-                 break;
-                case 'THEATER_ADMIN':
-                  this.router.navigate(['theater-admin', decodedToken.id]);
-                  localStorage.setItem('userRole', 'THEATER_ADMIN');
-                  break;
-               default:
-                 this.router.navigate(['/register']);
-             }
+              this.authService.login(data.login.token);       
           }
         },
         (error) => {

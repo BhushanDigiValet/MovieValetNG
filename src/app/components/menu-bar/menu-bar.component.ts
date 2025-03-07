@@ -4,6 +4,9 @@ import { MegaMenuModule } from 'primeng/megamenu';
 import { RippleModule } from 'primeng/ripple';
 import { AvatarModule } from 'primeng/avatar';
 import { ButtonModule } from 'primeng/button';
+import { AuthService } from '../../services/auth.service';
+import path from 'path';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-menu-bar',
@@ -24,6 +27,7 @@ export class MenuBarComponent {
       label: 'Home',
       icon: 'pi pi-home',
       root: true,
+      path: 'admin/users',
     },
     {
       label: 'Profile',
@@ -31,9 +35,10 @@ export class MenuBarComponent {
       root: true,
     },
     {
-      label: 'Settings',
-      icon: 'pi pi-cog',
+      label: 'Log out',
+      icon: 'pi pi-sign-out',
       root: true,
+      path: '/login',
     },
     {
       label: 'Support',
@@ -41,4 +46,12 @@ export class MenuBarComponent {
       root: true,
     },
   ];
+  constructor(private auth: AuthService, private router: Router) {}
+  navigate(path: string) {
+    if (path === '/login') {
+      this.auth.logout();
+    } else {
+      this.router.navigate([path]);
+    }
+  }
 }

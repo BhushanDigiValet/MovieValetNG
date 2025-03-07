@@ -1,7 +1,39 @@
-.userHomeDiv{
-    height: 100vh;
-    width: 100vw;
+.userHomeDiv {
+  height: 100vh;
+  width: 100vw;
 }
-.carousel{
-    margin-top: 30px;
+.carousel {
+  margin-top: 30px;
+}
+#sale {
+  background: #10b981 !important;
+}
+.theater {
+  color: #10b981 !important;
+}
+.custom-button {
+  background-color: #10b981 !important; /* Green background */
+  color: white !important; /* White text */
+  border: none !important; /* Remove default border */
+  font-weight: bold;
+  border-radius: 8px;
+  transition: all 0.3s ease-in-out;
+}
+
+.custom-button:hover {
+  background-color: #059669 !important; /* Darker green on hover */
+}
+
+.custom-button .pi {
+  color: white !important; /* White icon */
+}
+.genre-card {
+  background: white;
+  border-radius: 10px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.genre-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
 }

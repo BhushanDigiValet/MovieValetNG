@@ -5,6 +5,8 @@ import { ButtonModule } from 'primeng/button';
 import { Dialog } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { TableModule } from 'primeng/table';
+import { DropdownModule } from 'primeng/dropdown';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
 
 @Component({
   selector: 'app-data-table',
@@ -13,15 +15,23 @@ import { TableModule } from 'primeng/table';
   imports: [
     FormsModule,
     InputTextModule,
-    Dialog,
+
     ButtonModule,
     CommonModule,
     TableModule,
+    DropdownModule,
+    OverlayPanelModule,
+    Dialog,
   ],
 })
 export class DataTableComponent {
   @Input() data: any[] = [];
-  @Input() columns: { field: string; header: string }[] = [];
+  @Input() columns: {
+    field: string;
+    header: string;
+    filter?: boolean;
+    filterOptions?: any[];
+  }[] = [];
   @Input() showEdit: boolean = true;
   @Input() showBlock: boolean = false;
 
@@ -30,21 +40,34 @@ export class DataTableComponent {
 
   visible: boolean = false;
   selectedItem: any = {};
+  selectedFilters: { [key: string]: any } = {};
 
   openEditDialog(item: any) {
     this.selectedItem = { ...item };
     this.visible = true;
   }
 
+  get filteredData(): any[] {
+    if (!this.data) return [];
+    return this.data.filter((item) =>
+      Object.keys(this.selectedFilters).every(
+        (key) =>
+          !this.selectedFilters[key] || item[key] === this.selectedFilters[key]
+      )
+    );
+  }
+
+  applyFilters() {
+    console.log('Filters applied:', this.selectedFilters);
+  }
+
   saveChanges() {
     this.save.emit(this.selectedItem);
     this.visible = false;
   }
+
   deleteUser(item: any) {
-    if (item) {
-      this.selectedItem = item; // Assign item if passed
-    }
-    console.log('Selected item:', this.selectedItem); // Debugging line
+    this.selectedItem = item;
     if (this.selectedItem?.id) {
       this.delete.emit(this.selectedItem);
     } else {

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../../services/user/user.service.ts.service';
 import { AddDialogComponent } from '../../../components/add-dialog/add-dialog.component';
 import { DataTableComponent } from '../../../components/data-table/data-table.component';
+import { SocketService } from '../../../services/socket/socket.service';
+import { AuthService } from '../../../services/auth.service';
 
 export interface User {
   id?: string;
@@ -25,7 +27,17 @@ export class UserComponent implements OnInit {
 
   userColumns = [
     { field: 'username', header: 'Name' },
-    { field: 'role', header: 'Role' },
+    {
+      field: 'role',
+      header: 'Role',
+      filter: true,
+      filterOptions: [
+        { label: 'All', value: null },
+        { label: 'Customer', value: 'CUSTOMER' },
+        { label: 'Admin', value: 'ADMIN' },
+        { label: 'Theater Admin', value: 'THEATER_ADMIN' },
+      ],
+    },
     { field: 'city', header: 'City' },
     { field: 'email', header: 'Email' },
   ];
@@ -62,7 +74,11 @@ export class UserComponent implements OnInit {
     },
   ];
 
-  constructor(private userService: UserService) {}
+  constructor(
+    private userService: UserService,
+
+    private authService: AuthService
+  ) {}
 
   ngOnInit() {
     this.loadUsers();
@@ -70,6 +86,7 @@ export class UserComponent implements OnInit {
 
   loadUsers() {
     this.userService.getUsers().subscribe(({ data }) => {
+      console.log(data.users);
       if (data?.users) {
         this.users = data.users.map((user: any) => ({
           id: user.id,
@@ -86,7 +103,7 @@ export class UserComponent implements OnInit {
     this.userService.register(data).subscribe({
       next: () => {
         console.log('User registered successfully:', data);
-        this.loadUsers(); 
+        this.loadUsers();
       },
       error: (err) => console.error('Registration failed:', err),
     });
@@ -97,7 +114,7 @@ export class UserComponent implements OnInit {
     this.userService.updateUser(updatedUser.id!, updatedUser).subscribe({
       next: () => {
         console.log('User updated:', updatedUser);
-        this.loadUsers(); 
+        this.loadUsers();
       },
       error: (err) => console.error('Error updating user:', err),
     });

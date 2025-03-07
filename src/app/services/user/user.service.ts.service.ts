@@ -127,7 +127,11 @@ export class UserService {
         query GetReservations {
           getReservations {
             id
-            userId
+            userId {
+              username
+              email
+              id
+            }
             showId {
               movieId {
                 title

@@ -101,12 +101,10 @@ export class TheatersComponent {
   deleteTheater(theater: any) {
     console.log(theater.id);
     if (theater.id) {
-      this.theaterService.deleteTheater(theater.id).subscribe((data) => {
-        console.log(data);
-        console.log(data.deleteTheater.id);
-        this.theater = this.theater.filter(
-          (th) => th.id !== data.deleteTheater.id
-        );
+      this.theaterService.deleteTheater(theater.id).subscribe({
+        next: () => {
+          this.theater = this.theater.filter((th) => th.id !== theater.id);
+        },
       });
     }
   }

@@ -33,7 +33,7 @@
 
         <!-- Display Total Price -->
         <p><strong>Total Price:</strong> ₹{{ totalAmount }}</p>
-
+         <p-toast position="top-right"></p-toast>
         <div class="card flex justify-center">
           <p-button (click)="showDialog()" label="Pay" />
           <p-dialog
@@ -85,7 +85,8 @@
                 severity="secondary"
                 (click)="visible = false"
               />
-              <p-button label="Pay" (click)="pay()" />
+            
+              <p-button pRipple label="Pay" (click)="pay()" />
             </div>
           </p-dialog>
         </div>

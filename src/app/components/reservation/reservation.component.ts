@@ -8,7 +8,9 @@ import { Dialog } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { TransactionService } from '../../services/user/transaction.service';
-import { forkJoin } from 'rxjs';
+import { Toast } from 'primeng/toast';
+import { Ripple } from 'primeng/ripple';
+import { MessageService } from 'primeng/api';
 
 interface MovieData {
   id: string;
@@ -23,6 +25,7 @@ interface MovieData {
 @Component({
   selector: 'app-reservation',
   standalone: true,
+  providers: [MessageService],
   imports: [
     UserMenubarComponent,
     CinemaSeatSelectorComponent,
@@ -30,6 +33,8 @@ interface MovieData {
     Dialog,
     ButtonModule,
     InputTextModule,
+    Toast,
+    Ripple,
   ],
   templateUrl: './reservation.component.html',
   styleUrl: './reservation.component.scss',
@@ -48,7 +53,8 @@ export class ReservationComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private showStorageService: ShowStorageService,
-    private transactionService: TransactionService
+    private transactionService: TransactionService,
+    private messageService: MessageService
   ) {}
 
   ngOnInit() {
@@ -126,5 +132,17 @@ export class ReservationComponent implements OnInit {
     });
 
     this.visible = false;
+    this.show();
+  }
+  show() {
+    this.messageService.add({
+      severity: 'success',
+      summary: 'Booking',
+      detail: 'Your Booking is confirmed',
+      life: 3000,
+    });
+    setTimeout(() => {
+      this.router.navigate(['/booking']);
+    }, 4000);
   }
 }
