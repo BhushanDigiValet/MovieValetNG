@@ -1,0 +1,64 @@
+<div>
+  <div><app-user-menubar></app-user-menubar></div>
+  <div class="booking-container">
+    <div class="filter">
+      <span>Filter</span>
+      <div class="filter-options">
+        <p-multiselect
+          [(ngModel)]="Genrevalue"
+          [options]="genres"
+          optionLabel="label"
+          optionValue="value"
+          [maxSelectedLabels]="3"
+          styleClass="w-full md:w-80"
+          placeholder="Genre"
+          (onChange)="updateAppliedFilters()"
+        ></p-multiselect>
+
+        <p-multiselect
+          [(ngModel)]="Languagevalue"
+          [options]="languages"
+          optionLabel="label"
+          [maxSelectedLabels]="3"
+          optionValue="value"
+          styleClass="w-full md:w-80"
+          size="large"
+          placeholder="Language"
+          (onChange)="updateAppliedFilters()"
+        ></p-multiselect>
+      </div>
+      <p-multiselect
+        [(ngModel)]="ImdbRatingvalue"
+        [options]="imdbRating"
+        optionLabel="label"
+        [maxSelectedLabels]="3"
+        optionValue="value"
+        styleClass="w-full md:w-80"
+        size="large"
+        placeholder="IMDB Rating"
+        (onChange)="updateAppliedFilters()"
+      ></p-multiselect>
+    </div>
+
+    <!-- Applied Filters Section -->
+
+    <div class="movie">
+      <div class="AppliedFilters">
+        <span>Applied Filters:</span>
+        <div class="filter-tags">
+          <span *ngFor="let filter of appliedFilters" class="filter-tag">
+            {{ filter.label }}
+            <button (click)="removeFilter(filter)">✖</button>
+          </span>
+        </div>
+      </div>
+      <div class="movie-list">
+        <app-movie-crad
+          *ngFor="let movie of filteredMovies"
+          [movie]="movie"
+        ></app-movie-crad>
+      </div>
+    </div>
+  </div>
+  xx
+</div>

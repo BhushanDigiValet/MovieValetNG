@@ -1,0 +1,21 @@
+<div class="mb-4 p-4">
+  <p-card [style]="{ width: '25rem', overflow: 'hidden' }">
+    <ng-template #header>
+      <img
+        [src]="movie.posterUrl"
+        alt="Movie Poster"
+        class="w-full object-cover"
+      />
+    </ng-template>
+    <ng-template #title> {{ movie.title }} </ng-template>
+    <ng-template #subtitle> IMDB: {{ movie.imdbRating }}⭐ </ng-template>
+    <p>
+      {{ movie.description }}
+    </p>
+    <ng-template #footer>
+      <div class="flex gap-4 mt-1">
+        <p-button label="Book" class="w-full" styleClass="w-full" />
+      </div>
+    </ng-template>
+  </p-card>
+</div>

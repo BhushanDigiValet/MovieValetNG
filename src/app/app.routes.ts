@@ -9,12 +9,13 @@ import { TheaterAdminComponent } from './pages/theater-admin/theater-admin.compo
 import { HomeComponent } from './components/home/home.component';
 import { UserHomeComponent } from './pages/user/user-home/user-home.component';
 import { ShowComponent } from './components/show/show.component';
-import { AdminReservationComponent } from './pages/admin/reservation/reservation.component'
+import { AdminReservationComponent } from './pages/admin/reservation/reservation.component';
 import { UserShowComponent } from './pages/user/user-show/user-show.component';
 import { BookingComponent } from './components/booking/booking.component';
 import { authGuard } from './guards/auth.guard';
 import { DataTableFilterComponent } from './components/data-table-filter/data-table-filter.component';
 import { ReservationComponent } from './components/reservation/reservation.component';
+import { UserMoviesComponent } from './components/user-movies/user-movies.component';
 
 export const routes: Routes = [
   { path: 'register', component: RegisterComponent },
@@ -29,6 +30,7 @@ export const routes: Routes = [
     canActivate: [authGuard],
     data: { roles: ['CUSTOMER'] },
   },
+  { path: 'movies', component: UserMoviesComponent },
   {
     path: 'admin',
     component: AdminComponent,
@@ -64,4 +66,5 @@ export const routes: Routes = [
     path: 'table',
     component: DataTableFilterComponent,
   },
+  { path: 'usershow', component: UserShowComponent },
 ];
